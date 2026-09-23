@@ -21,7 +21,11 @@ export default async function Home() {
       <div className="mt-6 text-sm">
         {session?.user ? (
           <p>
-            logged in as {session.user.name} ({session.user.role}) · <LogoutButton />
+            logged in as {session.user.name} ({session.user.role}) ·{" "}
+            <Link href="/tickets" className="underline">
+              my complaints
+            </Link>{" "}
+            · <LogoutButton />
           </p>
         ) : (
           <p>
