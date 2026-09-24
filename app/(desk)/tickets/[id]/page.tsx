@@ -87,6 +87,14 @@ export default async function TicketPage({ params }: { params: { id: string } })
             <dt className="text-ink/40">SLA window</dt>
             <dd>{SLA_HOURS[ticket.priority]} hours for {ticket.priority.toLowerCase()} priority</dd>
           </div>
+          {ticket.rating ? (
+            <div className="sm:col-span-2">
+              <dt className="text-ink/40">Fix rating</dt>
+              <dd>
+                {ticket.rating}/5{ticket.ratingNote ? ` — ${ticket.ratingNote}` : ""}
+              </dd>
+            </div>
+          ) : null}
         </dl>
       </article>
 

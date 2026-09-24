@@ -119,6 +119,8 @@ async function main() {
     assigneeId?: string;
     createdAt: Date;
     resolvedAt?: Date;
+    rating?: number;
+    ratingNote?: string;
     events: Array<{ actorId: string; type: string; message: string; hoursAgo: number }>;
   }> = [
     {
@@ -264,6 +266,8 @@ async function main() {
       assigneeId: electrician.id,
       createdAt: ago(120),
       resolvedAt: ago(90),
+      rating: 4,
+      ratingNote: "Light stays on. Took a couple of days, but it is fixed.",
       events: [
         { actorId: student.id, type: "CREATED", message: "Ticket opened", hoursAgo: 120 },
         {
@@ -307,6 +311,8 @@ async function main() {
         createdAt: t.createdAt,
         updatedAt: t.createdAt,
         resolvedAt: t.resolvedAt,
+        rating: t.rating,
+        ratingNote: t.ratingNote,
       },
     });
 

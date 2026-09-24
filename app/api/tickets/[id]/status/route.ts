@@ -50,10 +50,22 @@ export async function POST(request: Request, { params }: Params) {
         ? null
         : ticket.resolvedAt;
 
+  const studentClosing =
+    user.role === "STUDENT" && parsed.data.status === "CLOSED" && ticket.status === "RESOLVED";
+  if (studentClosing && !parsed.data.rating) {
+    return NextResponse.json({ error: "Rate the fix from 1 to 5 before you close it." }, { status: 400 });
+  }
+
   const note = parsed.data.note?.trim();
-  const message = note
+  const rated = parsed.data.status === "CLOSED" ? parsed.data.rating : undefined;
+  let message = note
     ? `Status → ${STATUS_LABEL[parsed.data.status]}. ${note}`
     : `Status → ${STATUS_LABEL[parsed.data.status]}`;
+  if (rated) {
+    message = note
+      ? `Status → Closed. Rated ${rated}/5. ${note}`
+      : `Status → Closed. Rated ${rated}/5.`;
+  }
 
   const updated = await prisma.ticket.update({
     where: { id: ticket.id },
@@ -61,6 +73,8 @@ export async function POST(request: Request, { params }: Params) {
       status: parsed.data.status,
       resolvedAt,
       assigneeId: parsed.data.status === "OPEN" ? null : ticket.assigneeId,
+      rating: parsed.data.status === "OPEN" ? null : rated ?? ticket.rating,
+      ratingNote: parsed.data.status === "OPEN" ? null : rated ? note || null : ticket.ratingNote,
       events: {
         create: {
           actorId: user.id,

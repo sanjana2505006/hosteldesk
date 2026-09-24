@@ -90,6 +90,10 @@ The inbox is the queue. An alert is the tap on the shoulder, written in the same
 
 If nobody is assigned yet, the block warden gets the comment or status ping. You do not get an alert for your own click. Opening the ticket marks it read.
 
+**Close-out rating**
+
+A student can close a resolved ticket only after scoring the fix from 1 to 5. The server returns `400` if the rating is missing. Reopening clears it. Worker averages show on the people page. **HD-1046** is already closed at 4/5. **HD-1045** is resolved and waiting for the student to close and rate it.
+
 **Visibility**
 
 - Student: own tickets
@@ -141,5 +145,6 @@ Local photo uploads land in `public/uploads`. On Vercel that disk is ephemeral â
 - Double-submit and illegal status jumps are rejected on the server (`409`), not only hidden in the UI.
 - SLA is computed from `createdAt + priority`, not a stored flag that can drift.
 - Alerts are rows written in the same request as the ticket change. The red badge is a count of unread rows, and I don't get one for my own click.
+- A student cannot close a resolved ticket without a 1 to 5 rating. That check is on the server, same as an illegal status jump.
 - Docker is how another machine (or CI) gets the same Postgres.
 - GitHub Actions is how I know `main` still builds.

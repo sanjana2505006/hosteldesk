@@ -49,4 +49,5 @@ export const statusSchema = z.object({
     "REJECTED",
   ]),
   note: z.string().max(400).optional(),
+  rating: z.number().int().min(1).max(5).optional(),
 });

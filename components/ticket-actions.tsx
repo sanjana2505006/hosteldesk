@@ -30,14 +30,24 @@ export function TicketActions({
   const router = useRouter();
   const [error, setError] = useState("");
   const [note, setNote] = useState("");
+  const [rating, setRating] = useState("");
   const actions = nextActions(status, { role, isAssignee, isReporter });
+  const needsRating = role === "STUDENT" && status === "RESOLVED";
 
   async function setStatus(next: TicketStatus) {
     setError("");
+    if (needsRating && next === "CLOSED" && !rating) {
+      setError("Rate the fix from 1 to 5 before you close it.");
+      return;
+    }
     const res = await fetch(`/api/tickets/${ticketId}/status`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status: next, note: note || undefined }),
+      body: JSON.stringify({
+        status: next,
+        note: note || undefined,
+        rating: rating ? Number(rating) : undefined,
+      }),
     });
     const data = await res.json();
     if (!res.ok) {
@@ -45,6 +55,7 @@ export function TicketActions({
       return;
     }
     setNote("");
+    setRating("");
     router.refresh();
   }
 
@@ -83,6 +94,23 @@ export function TicketActions({
           </select>
         </label>
       ) : null}
+      {needsRating ? (
+        <label className="block text-sm">
+          How was the fix?
+          <select
+            value={rating}
+            onChange={(e) => setRating(e.target.value)}
+            className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2"
+          >
+            <option value="">Pick 1 to 5</option>
+            <option value="5">5 — sorted</option>
+            <option value="4">4 — fine</option>
+            <option value="3">3 — okay</option>
+            <option value="2">2 — still off</option>
+            <option value="1">1 — not fixed</option>
+          </select>
+        </label>
+      ) : null}
       {actions.length ? (
         <label className="block text-sm">
           Note (optional)
@@ -90,7 +118,7 @@ export function TicketActions({
             value={note}
             onChange={(e) => setNote(e.target.value)}
             className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2"
-            placeholder="Visited room, waiting for a washer…"
+            placeholder={needsRating ? "Tap still drips a little…" : "Visited room, waiting for a washer…"}
           />
         </label>
       ) : null}
