@@ -1,44 +1,80 @@
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/auth";
+import { ticketWhereFor } from "@/lib/access";
+import { notifyWardens } from "@/lib/notify";
 import { prisma } from "@/lib/prisma";
+import { createTicketSchema } from "@/lib/schemas";
+import { requireUser } from "@/lib/session";
+import { generateRef } from "@/lib/utils";
 
-export async function POST(req: Request) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: "login first" }, { status: 401 });
-  }
+export const dynamic = "force-dynamic";
 
-  const me = await prisma.user.findUnique({
-    where: { id: session.user.id },
+export async function GET() {
+  const user = await requireUser();
+  if (!user) return NextResponse.json({ error: "Sign in first." }, { status: 401 });
+
+  const tickets = await prisma.ticket.findMany({
+    where: ticketWhereFor(user),
+    include: {
+      hostel: true,
+      reporter: { select: { id: true, name: true, roomNumber: true } },
+      assignee: { select: { id: true, name: true } },
+    },
+    orderBy: [{ createdAt: "desc" }],
   });
 
-  if (!me?.hostelId) {
-    return NextResponse.json({ error: "your account has no hostel" }, { status: 400 });
+  return NextResponse.json({ tickets });
+}
+
+export async function POST(request: Request) {
+  const user = await requireUser();
+  if (!user) return NextResponse.json({ error: "Sign in first." }, { status: 401 });
+  if (!user.hostelId) {
+    return NextResponse.json(
+      { error: "Your account is not attached to a hostel block." },
+      { status: 400 },
+    );
   }
 
-  const body = await req.json();
-  const title = String(body.title || "").trim();
-  const description = String(body.description || "").trim();
-  const category = String(body.category || "").trim();
-  const priority = body.priority || "MEDIUM";
-  const roomNo = String(body.roomNo || me.roomNo || "").trim();
+  const body = await request.json().catch(() => null);
+  const parsed = createTicketSchema.safeParse(body);
+  if (!parsed.success) {
+    return NextResponse.json({ error: "Fill every field — title needs 4+ characters." }, { status: 400 });
+  }
 
-  if (!title || !description || !category || !roomNo) {
-    return NextResponse.json({ error: "fill all the fields" }, { status: 400 });
+  let ref = generateRef();
+  for (let i = 0; i < 5; i += 1) {
+    const clash = await prisma.ticket.findUnique({ where: { ref } });
+    if (!clash) break;
+    ref = generateRef();
   }
 
   const ticket = await prisma.ticket.create({
     data: {
-      title,
-      description,
-      category,
-      priority,
-      roomNo,
-      hostelId: me.hostelId,
-      createdById: me.id,
+      ref,
+      title: parsed.data.title.trim(),
+      description: parsed.data.description.trim(),
+      category: parsed.data.category,
+      priority: parsed.data.priority,
+      roomNumber: parsed.data.roomNumber.trim().toUpperCase(),
+      photoUrl: parsed.data.photoUrl || null,
+      hostelId: user.hostelId,
+      reporterId: user.id,
+      events: {
+        create: {
+          actorId: user.id,
+          type: "CREATED",
+          message: "Ticket opened",
+        },
+      },
     },
   });
 
-  return NextResponse.json({ ticket });
+  await notifyWardens(
+    user.hostelId,
+    user.id,
+    ticket.id,
+    `${user.name ?? "A student"} filed ${ticket.ref}: ${ticket.title}`,
+  );
+
+  return NextResponse.json({ ticket }, { status: 201 });
 }

@@ -5,35 +5,36 @@ import { prisma } from "@/lib/prisma";
 
 export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
-  pages: {
-    signIn: "/login",
-  },
+  pages: { signIn: "/login" },
   providers: [
     CredentialsProvider({
-      name: "credentials",
+      name: "Email",
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null;
-        }
+        const email = credentials?.email?.toLowerCase().trim();
+        const password = credentials?.password;
+        if (!email || !password) return null;
 
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email.toLowerCase().trim() },
+          where: { email },
+          include: { hostel: true },
         });
-
         if (!user) return null;
 
-        const ok = await compare(credentials.password, user.password);
+        const ok = await compare(password, user.password);
         if (!ok) return null;
 
         return {
           id: user.id,
-          name: user.name,
           email: user.email,
+          name: user.name,
           role: user.role,
+          hostelId: user.hostelId,
+          hostelName: user.hostel ? `${user.hostel.name} · ${user.hostel.block}` : null,
+          roomNumber: user.roomNumber,
         };
       },
     }),
@@ -43,13 +44,19 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.id = user.id;
         token.role = user.role;
+        token.hostelId = user.hostelId;
+        token.hostelName = user.hostelName;
+        token.roomNumber = user.roomNumber;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
-        session.user.role = token.role as string;
+        session.user.role = token.role;
+        session.user.hostelId = token.hostelId;
+        session.user.hostelName = token.hostelName;
+        session.user.roomNumber = token.roomNumber;
       }
       return session;
     },

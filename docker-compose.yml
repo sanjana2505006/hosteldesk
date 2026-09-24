@@ -1,15 +1,21 @@
 services:
-  db:
-    image: postgres:16
-    container_name: hosteldesk-db
-    ports:
-      - "5433:5432"
+  postgres:
+    image: postgres:16-alpine
+    container_name: hosteldesk-postgres
+    restart: unless-stopped
     environment:
       POSTGRES_USER: hosteldesk
       POSTGRES_PASSWORD: hosteldesk
       POSTGRES_DB: hosteldesk
+    ports:
+      - "5433:5432"
     volumes:
-      - hosteldesk_data:/var/lib/postgresql/data
+      - hosteldesk_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hosteldesk -d hosteldesk"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
 volumes:
-  hosteldesk_data:
+  hosteldesk_pg:

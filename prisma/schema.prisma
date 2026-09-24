@@ -11,67 +11,115 @@ enum Role {
   STUDENT
   WARDEN
   WORKER
+  ADMIN
 }
 
 enum TicketStatus {
   OPEN
+  ASSIGNED
   IN_PROGRESS
+  WAITING_PARTS
   RESOLVED
   CLOSED
+  REJECTED
 }
 
 enum Priority {
   LOW
   MEDIUM
   HIGH
+  URGENT
+}
+
+enum Category {
+  PLUMBING
+  ELECTRICAL
+  CARPENTRY
+  WIFI
+  HOUSEKEEPING
+  FURNITURE
+  OTHER
 }
 
 model Hostel {
   id        String   @id @default(cuid())
   name      String
   block     String
+  city      String   @default("Campus")
+  createdAt DateTime @default(now())
   users     User[]
   tickets   Ticket[]
-  createdAt DateTime @default(now())
 }
 
 model User {
-  id       String  @id @default(cuid())
-  name     String
-  email    String  @unique
-  password String
-  role     Role    @default(STUDENT)
-  roomNo   String?
-  phone    String?
-
-  hostelId String?
-  hostel   Hostel? @relation(fields: [hostelId], references: [id])
-
-  tickets  Ticket[] @relation("ReportedBy")
-  assigned Ticket[] @relation("AssignedTo")
-
-  createdAt DateTime @default(now())
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  password     String
+  role         Role     @default(STUDENT)
+  phone        String?
+  roomNumber   String?
+  hostelId     String?
+  hostel       Hostel?  @relation(fields: [hostelId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  reported     Ticket[] @relation("Reporter")
+  assigned     Ticket[] @relation("Assignee")
+  events       TicketEvent[]
+  alerts       Alert[]
 }
 
 model Ticket {
   id          String       @id @default(cuid())
+  ref         String       @unique
   title       String
   description String
-  // plumbing, electrical, wifi etc for now
-  category    String
-  status      TicketStatus @default(OPEN)
+  category    Category
   priority    Priority     @default(MEDIUM)
-  roomNo      String
+  status      TicketStatus @default(OPEN)
+  roomNumber  String
+  photoUrl    String?
+  hostelId    String
+  hostel      Hostel       @relation(fields: [hostelId], references: [id])
+  reporterId  String
+  reporter    User         @relation("Reporter", fields: [reporterId], references: [id])
+  assigneeId  String?
+  assignee    User?        @relation("Assignee", fields: [assigneeId], references: [id])
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  resolvedAt  DateTime?
+  events      TicketEvent[]
+  alerts      Alert[]
 
-  hostelId String
-  hostel   Hostel @relation(fields: [hostelId], references: [id])
+  @@index([status, priority])
+  @@index([hostelId])
+  @@index([assigneeId])
+  @@index([reporterId])
+}
 
-  createdById String
-  createdBy   User   @relation("ReportedBy", fields: [createdById], references: [id])
-
-  assignedToId String?
-  assignedTo   User?   @relation("AssignedTo", fields: [assignedToId], references: [id])
-
+model TicketEvent {
+  id        String   @id @default(cuid())
+  type      String
+  message   String
+  ticketId  String
+  ticket    Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  actorId   String
+  actor     User     @relation(fields: [actorId], references: [id])
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+
+  @@index([ticketId, createdAt])
+}
+
+model Alert {
+  id        String    @id @default(cuid())
+  message   String
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ticketId  String
+  ticket    Ticket    @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+
+  @@index([userId, readAt])
+  @@index([ticketId])
 }

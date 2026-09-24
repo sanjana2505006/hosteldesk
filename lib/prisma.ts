@@ -1,11 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
-};
+const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 
-// next hot reload kept making new connections so i stuck it on global
-export const prisma = globalForPrisma.prisma ?? new PrismaClient();
+export const prisma =
+  globalForPrisma.prisma ??
+  new PrismaClient({
+    log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
+  });
 
 if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = prisma;
