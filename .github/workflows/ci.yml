@@ -9,6 +9,10 @@ jobs:
   check:
     name: Lint, schema, build
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql://hosteldesk:hosteldesk@localhost:5433/hosteldesk?schema=public
+      NEXTAUTH_SECRET: ci-build-secret
+      NEXTAUTH_URL: http://localhost:3000
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -21,7 +25,3 @@ jobs:
       - run: npm run lint
       - name: Production build
         run: npm run build
-        env:
-          DATABASE_URL: postgresql://hosteldesk:hosteldesk@localhost:5433/hosteldesk?schema=public
-          NEXTAUTH_SECRET: ci-build-secret
-          NEXTAUTH_URL: http://localhost:3000

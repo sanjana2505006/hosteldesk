@@ -8,7 +8,7 @@ type TicketBits = {
 };
 
 async function insert(userIds: string[], actorId: string, ticketId: string, message: string) {
-  const ids = [...new Set(userIds)].filter((id) => id && id !== actorId);
+  const ids = Array.from(new Set(userIds)).filter((id) => id && id !== actorId);
   if (!ids.length) return;
 
   await prisma.alert.createMany({
