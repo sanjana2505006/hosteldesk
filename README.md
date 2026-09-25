@@ -94,6 +94,10 @@ If nobody is assigned yet, the block warden gets the comment or status ping. You
 
 A student can close a resolved ticket only after scoring the fix from 1 to 5. The server returns `400` if the rating is missing. Reopening clears it. Worker averages show on the people page. **HD-1046** is already closed at 4/5. **HD-1045** is resolved and waiting for the student to close and rate it.
 
+**Inbox filters**
+
+The four counts stay on the whole queue. The list can be narrowed by room, ref, title, status, category, or late tickets only. Late still comes from the SLA clock.
+
 **Visibility**
 
 - Student: own tickets
@@ -104,7 +108,7 @@ A student can close a resolved ticket only after scoring the fix from 1 to 5. Th
 ## Project shape
 
 ```
-app/(desk)/inbox          role-aware queue + SLA counts
+app/(desk)/inbox          role-aware queue, SLA counts, filters
 app/(desk)/alerts         unread pings for the other people on a ticket
 app/(desk)/board          warden kanban
 app/(desk)/tickets/new    file a complaint + photo
@@ -146,5 +150,6 @@ Local photo uploads land in `public/uploads`. On Vercel that disk is ephemeral â
 - SLA is computed from `createdAt + priority`, not a stored flag that can drift.
 - Alerts are rows written in the same request as the ticket change. The red badge is a count of unread rows, and I don't get one for my own click.
 - A student cannot close a resolved ticket without a 1 to 5 rating. That check is on the server, same as an illegal status jump.
+- Inbox filters narrow the list. The SLA count above them is still the whole queue, computed from `createdAt + priority`.
 - Docker is how another machine (or CI) gets the same Postgres.
 - GitHub Actions is how I know `main` still builds.

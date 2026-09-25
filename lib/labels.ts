@@ -36,3 +36,4 @@ export const ROLE_LABEL: Record<Role, string> = {
 
 export const CATEGORIES = Object.keys(CATEGORY_LABEL) as Category[];
 export const PRIORITIES = Object.keys(PRIORITY_LABEL) as Priority[];
+export const STATUSES = Object.keys(STATUS_LABEL) as TicketStatus[];
