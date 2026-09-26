@@ -1,9 +1,10 @@
+import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { ClearTicketAlerts } from "@/components/alert-actions";
 import { CommentForm } from "@/components/comment-form";
 import { PriorityBadge, SlaBadge, StatusBadge } from "@/components/badges";
 import { TicketActions } from "@/components/ticket-actions";
-import { canAssign, canViewTicket } from "@/lib/access";
+import { canAssign, canViewTicket, ticketWhereFor } from "@/lib/access";
 import { CATEGORY_LABEL, ROLE_LABEL } from "@/lib/labels";
 import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/session";
@@ -30,6 +31,22 @@ export default async function TicketPage({ params }: { params: { id: string } })
   });
 
   if (!ticket || !canViewTicket(user, ticket)) notFound();
+
+  const sameRoom = await prisma.ticket.findMany({
+    where: {
+      AND: [
+        ticketWhereFor(user),
+        {
+          hostelId: ticket.hostelId,
+          roomNumber: ticket.roomNumber,
+          id: { not: ticket.id },
+        },
+      ],
+    },
+    select: { id: true, ref: true, title: true, status: true },
+    orderBy: { createdAt: "desc" },
+    take: 8,
+  });
 
   const workers = canAssign(user.role)
     ? await prisma.user.findMany({
@@ -96,6 +113,28 @@ export default async function TicketPage({ params }: { params: { id: string } })
             </div>
           ) : null}
         </dl>
+        <section className="rounded-lg border border-line bg-panel p-4">
+          <p className="text-[11px] uppercase tracking-[0.16em] text-ink/45">
+            Also filed for {ticket.roomNumber}
+          </p>
+          {sameRoom.length ? (
+            <ul className="mt-3 divide-y divide-line">
+              {sameRoom.map((other) => (
+                <li key={other.id}>
+                  <Link href={`/tickets/${other.id}`} className="flex flex-wrap items-center justify-between gap-2 py-2">
+                    <span className="text-sm">
+                      <span className="font-mono text-xs text-forest">{other.ref}</span>
+                      <span className="ml-2 text-ink">{other.title}</span>
+                    </span>
+                    <StatusBadge status={other.status} />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mt-3 text-sm text-ink/50">Nothing else on file for this room.</p>
+          )}
+        </section>
       </article>
 
       <aside className="space-y-6">

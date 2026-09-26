@@ -98,6 +98,10 @@ A student can close a resolved ticket only after scoring the fix from 1 to 5. Th
 
 The four counts stay on the whole queue. The list can be narrowed by room, ref, title, status, category, or late tickets only. Late still comes from the SLA clock.
 
+**Same room**
+
+A ticket page lists the other complaints for that room and block. It uses the same visibility as the inbox, so a student only sees their own and a worker only sees jobs assigned to them. Open **HD-1041** as the warden: A-214 already has the Wi-Fi, the chair, the fan, and the drain.
+
 **Visibility**
 
 - Student: own tickets
@@ -112,7 +116,7 @@ app/(desk)/inbox          role-aware queue, SLA counts, filters
 app/(desk)/alerts         unread pings for the other people on a ticket
 app/(desk)/board          warden kanban
 app/(desk)/tickets/new    file a complaint + photo
-app/(desk)/tickets/[id]   timeline, assign, status moves
+app/(desk)/tickets/[id]   timeline, assign, status moves, other tickets for the room
 app/api/tickets           Zod-validated writes + event log
 prisma/schema.prisma      Hostels, users, tickets, events
 .github/workflows/ci.yml  lint · validate · build
@@ -151,5 +155,6 @@ Local photo uploads land in `public/uploads`. On Vercel that disk is ephemeral �
 - Alerts are rows written in the same request as the ticket change. The red badge is a count of unread rows, and I don't get one for my own click.
 - A student cannot close a resolved ticket without a 1 to 5 rating. That check is on the server, same as an illegal status jump.
 - Inbox filters narrow the list. The SLA count above them is still the whole queue, computed from `createdAt + priority`.
+- The ticket page lists the other complaints for that room. A student still only sees their own.
 - Docker is how another machine (or CI) gets the same Postgres.
 - GitHub Actions is how I know `main` still builds.
