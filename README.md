@@ -102,6 +102,10 @@ The four counts stay on the whole queue. The list can be narrowed by room, ref, 
 
 A ticket page lists the other complaints for that room and block. It uses the same visibility as the inbox, so a student only sees their own and a worker only sees jobs assigned to them. Open **HD-1041** as the warden: A-214 already has the Wi-Fi, the chair, the fan, and the drain.
 
+**Who is busy**
+
+The assign menu shows how many tickets that worker still has open. Resolved, closed, and rejected jobs are left out. On the seeded desk Suresh is on the Wi-Fi and the fan, so he shows 2 open. Ramesh has the chair, so he shows 1.
+
 **Visibility**
 
 - Student: own tickets
@@ -156,5 +160,6 @@ Local photo uploads land in `public/uploads`. On Vercel that disk is ephemeral â
 - A student cannot close a resolved ticket without a 1 to 5 rating. That check is on the server, same as an illegal status jump.
 - Inbox filters narrow the list. The SLA count above them is still the whole queue, computed from `createdAt + priority`.
 - The ticket page lists the other complaints for that room. A student still only sees their own.
+- The assign menu shows how many open jobs a worker already has. A resolved ticket is not counted.
 - Docker is how another machine (or CI) gets the same Postgres.
 - GitHub Actions is how I know `main` still builds.

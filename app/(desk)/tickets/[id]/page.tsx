@@ -48,7 +48,7 @@ export default async function TicketPage({ params }: { params: { id: string } })
     take: 8,
   });
 
-  const workers = canAssign(user.role)
+  const workerRows = canAssign(user.role)
     ? await prisma.user.findMany({
         where: {
           role: "WORKER",
@@ -58,6 +58,28 @@ export default async function TicketPage({ params }: { params: { id: string } })
         orderBy: { name: "asc" },
       })
     : [];
+
+  const openJobs = workerRows.length
+    ? await prisma.ticket.groupBy({
+        by: ["assigneeId"],
+        where: {
+          assigneeId: { in: workerRows.map((row) => row.id) },
+          status: { notIn: ["RESOLVED", "CLOSED", "REJECTED"] },
+        },
+        _count: { _all: true },
+      })
+    : [];
+
+  const openByWorker = new Map<string, number>();
+  for (const row of openJobs) {
+    if (row.assigneeId) openByWorker.set(row.assigneeId, row._count._all);
+  }
+
+  const workers = workerRows.map((row) => ({
+    id: row.id,
+    name: row.name,
+    openJobs: openByWorker.get(row.id) ?? 0,
+  }));
 
   return (
     <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">

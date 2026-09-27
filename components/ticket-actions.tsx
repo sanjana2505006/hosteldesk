@@ -6,7 +6,7 @@ import { useState } from "react";
 import { STATUS_LABEL } from "@/lib/labels";
 import { nextActions } from "@/lib/status";
 
-type Worker = { id: string; name: string };
+type Worker = { id: string; name: string; openJobs: number };
 
 export function TicketActions({
   ticketId,
@@ -88,7 +88,7 @@ export function TicketActions({
             <option value="">Unassigned</option>
             {workers.map((w) => (
               <option key={w.id} value={w.id}>
-                {w.name}
+                {w.name} · {w.openJobs} open
               </option>
             ))}
           </select>
