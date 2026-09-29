@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { ticketWhereFor } from "@/lib/access";
+import { CATEGORY_LABEL } from "@/lib/labels";
 import { notifyWardens } from "@/lib/notify";
 import { prisma } from "@/lib/prisma";
 import { createTicketSchema } from "@/lib/schemas";
@@ -41,6 +42,27 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Fill every field — title needs 4+ characters." }, { status: 400 });
   }
 
+  const roomNumber = parsed.data.roomNumber.trim().toUpperCase();
+  const alreadyOpen = await prisma.ticket.findFirst({
+    where: {
+      hostelId: user.hostelId,
+      roomNumber,
+      category: parsed.data.category,
+      status: { notIn: ["RESOLVED", "CLOSED", "REJECTED"] },
+    },
+    select: { id: true, ref: true },
+    orderBy: { createdAt: "desc" },
+  });
+  if (alreadyOpen) {
+    return NextResponse.json(
+      {
+        error: `${roomNumber} already has an open ${CATEGORY_LABEL[parsed.data.category]} ticket (${alreadyOpen.ref}).`,
+        ticketId: alreadyOpen.id,
+      },
+      { status: 409 },
+    );
+  }
+
   let ref = generateRef();
   for (let i = 0; i < 5; i += 1) {
     const clash = await prisma.ticket.findUnique({ where: { ref } });
@@ -55,7 +77,7 @@ export async function POST(request: Request) {
       description: parsed.data.description.trim(),
       category: parsed.data.category,
       priority: parsed.data.priority,
-      roomNumber: parsed.data.roomNumber.trim().toUpperCase(),
+      roomNumber,
       photoUrl: parsed.data.photoUrl || null,
       hostelId: user.hostelId,
       reporterId: user.id,

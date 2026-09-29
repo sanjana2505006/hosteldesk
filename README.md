@@ -106,6 +106,10 @@ A ticket page lists the other complaints for that room and block. It uses the sa
 
 The assign menu shows how many tickets that worker still has open. Resolved, closed, and rejected jobs are left out. On the seeded desk Suresh is on the Wi-Fi and the fan, so he shows 2 open. Ramesh has the chair, so he shows 1.
 
+**No second ticket**
+
+The same room cannot have two open tickets in one category. Resolved, closed, and rejected ones do not block a new filing. Try plumbing for A-214 as the student: **HD-1041** is still open, so the form returns 409 and links to it.
+
 **Visibility**
 
 - Student: own tickets
@@ -161,5 +165,6 @@ Local photo uploads land in `public/uploads`. On Vercel that disk is ephemeral â
 - Inbox filters narrow the list. The SLA count above them is still the whole queue, computed from `createdAt + priority`.
 - The ticket page lists the other complaints for that room. A student still only sees their own.
 - The assign menu shows how many open jobs a worker already has. A resolved ticket is not counted.
+- The same room cannot get a second open ticket in the same category. That is a 409, with a link to the one already on file.
 - Docker is how another machine (or CI) gets the same Postgres.
 - GitHub Actions is how I know `main` still builds.

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { CATEGORIES, CATEGORY_LABEL, PRIORITIES, PRIORITY_LABEL } from "@/lib/labels";
@@ -7,6 +8,7 @@ import { CATEGORIES, CATEGORY_LABEL, PRIORITIES, PRIORITY_LABEL } from "@/lib/la
 export function TicketForm({ defaultRoom }: { defaultRoom?: string | null }) {
   const router = useRouter();
   const [error, setError] = useState("");
+  const [existingId, setExistingId] = useState("");
   const [pending, setPending] = useState(false);
   const [photoUrl, setPhotoUrl] = useState("");
 
@@ -23,6 +25,7 @@ export function TicketForm({ defaultRoom }: { defaultRoom?: string | null }) {
     event.preventDefault();
     setPending(true);
     setError("");
+    setExistingId("");
     const form = new FormData(event.currentTarget);
     const payload = {
       title: form.get("title"),
@@ -41,6 +44,7 @@ export function TicketForm({ defaultRoom }: { defaultRoom?: string | null }) {
     setPending(false);
     if (!res.ok) {
       setError(data.error ?? "Could not file the ticket.");
+      setExistingId(typeof data.ticketId === "string" ? data.ticketId : "");
       return;
     }
     router.push(`/tickets/${data.ticket.id}`);
@@ -102,6 +106,11 @@ export function TicketForm({ defaultRoom }: { defaultRoom?: string | null }) {
         {photoUrl ? <p className="mt-1 text-xs text-moss">Photo attached.</p> : null}
       </label>
       {error ? <p className="text-sm text-rust">{error}</p> : null}
+      {existingId ? (
+        <Link href={`/tickets/${existingId}`} className="text-sm text-forest">
+          Open the existing ticket
+        </Link>
+      ) : null}
       <button
         disabled={pending}
         className="rounded-md bg-rust px-4 py-2.5 text-sm font-medium text-white hover:bg-[#a33d14] disabled:opacity-60"
