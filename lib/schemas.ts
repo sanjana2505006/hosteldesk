@@ -38,6 +38,11 @@ export const readAlertsSchema = z.object({
   ticketId: z.string().min(1).optional(),
 });
 
+export const noticeSchema = z.object({
+  title: z.string().min(4).max(80),
+  body: z.string().min(8).max(1000),
+});
+
 export const statusSchema = z.object({
   status: z.enum([
     "OPEN",

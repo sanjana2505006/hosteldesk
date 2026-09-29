@@ -41,6 +41,9 @@ export default async function DeskLayout({ children }: { children: React.ReactNo
                 </span>
               ) : null}
             </Link>
+            <Link href="/notices" className="hover:text-white">
+              Notices
+            </Link>
             {user.role !== "WORKER" ? (
               <Link href="/tickets/new" className="hover:text-white">
                 New ticket

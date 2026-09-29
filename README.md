@@ -44,10 +44,11 @@ Seeded data includes **HD-1041** — a high-priority leak filed ~80 hours ago. H
 | ------------ | ------------------------------------------- |
 | App          | Next.js 14 App Router, TypeScript           |
 | Auth         | NextAuth JWT + credentials, four roles      |
-| Database     | PostgreSQL 16                               |
+| Database     | PostgreSQL 16 for tickets; MongoDB 7 for notices |
+| API          | Next routes for the desk; Express for notices    |
 | ORM          | Prisma (schema + migrations + seed)         |
 | Validation   | Zod on every write                          |
-| Containers   | Docker Compose for Postgres (host port 5433) |
+| Containers   | Docker Compose: Postgres on 5433, Mongo on 27017 |
 | CI           | GitHub Actions: lint, `prisma validate`, build |
 | Deploy shape | `output: "standalone"` Dockerfile           |
 
@@ -110,6 +111,16 @@ The assign menu shows how many tickets that worker still has open. Resolved, clo
 
 The same room cannot have two open tickets in one category. Resolved, closed, and rejected ones do not block a new filing. Try plumbing for A-214 as the student: **HD-1041** is still open, so the form returns 409 and links to it.
 
+**Notice board**
+
+Tickets stay in Postgres. Notices are a small Express app (`server/index.js`) on MongoDB. The page checks who is signed in, then calls Express with `DESK_API_KEY`. A warden’s post stays on their block. An admin’s post is for the whole campus. Students see campus notices plus their own block.
+
+```bash
+npm run docker:up    # Postgres and Mongo
+npm run server       # Express on port 4000, in a second terminal
+npm run dev
+```
+
 **Visibility**
 
 - Student: own tickets
@@ -122,13 +133,15 @@ The same room cannot have two open tickets in one category. Resolved, closed, an
 ```
 app/(desk)/inbox          role-aware queue, SLA counts, filters
 app/(desk)/alerts         unread pings for the other people on a ticket
+app/(desk)/notices        notice board, read from Express
+server/index.js           Express API, MongoDB
 app/(desk)/board          warden kanban
 app/(desk)/tickets/new    file a complaint + photo
 app/(desk)/tickets/[id]   timeline, assign, status moves, other tickets for the room
 app/api/tickets           Zod-validated writes + event log
 prisma/schema.prisma      Hostels, users, tickets, events
 .github/workflows/ci.yml  lint · validate · build
-docker-compose.yml        Postgres 16
+docker-compose.yml        Postgres 16 and MongoDB 7
 ```
 
 Every status change and assignment writes a `TicketEvent`. That timeline is the audit log.
@@ -165,6 +178,7 @@ Local photo uploads land in `public/uploads`. On Vercel that disk is ephemeral �
 - Inbox filters narrow the list. The SLA count above them is still the whole queue, computed from `createdAt + priority`.
 - The ticket page lists the other complaints for that room. A student still only sees their own.
 - The assign menu shows how many open jobs a worker already has. A resolved ticket is not counted.
+- The notice board is Express and Mongo. The ticket desk is still Postgres. Next only forwards the post after checking the role.
 - The same room cannot get a second open ticket in the same category. That is a 409, with a link to the one already on file.
 - Docker is how another machine (or CI) gets the same Postgres.
 - GitHub Actions is how I know `main` still builds.

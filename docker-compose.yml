@@ -17,5 +17,15 @@ services:
       timeout: 5s
       retries: 10
 
+  mongo:
+    image: mongo:7
+    container_name: hosteldesk-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - hosteldesk_mongo:/data/db
+
 volumes:
   hosteldesk_pg:
+  hosteldesk_mongo:
