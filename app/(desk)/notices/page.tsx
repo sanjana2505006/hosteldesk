@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { NoticeForm } from "@/components/notice-form";
+import { NoticeSeen } from "@/components/notice-seen";
 import { requireUser } from "@/lib/session";
 import { formatDate } from "@/lib/utils";
 
@@ -12,6 +13,7 @@ type Notice = {
   hostelLabel: string;
   authorName: string;
   createdAt: string;
+  seenBy?: { userId: string; name: string }[];
 };
 
 async function loadNotices(role: string, hostelId: string | null | undefined) {
@@ -55,16 +57,24 @@ export default async function NoticesPage() {
         </p>
       ) : notices.length ? (
         <div className="space-y-3">
-          {notices.map((notice) => (
-            <article key={notice._id} className="rounded-lg border border-line bg-panel p-4">
-              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-forest">{notice.hostelLabel}</p>
-              <h2 className="mt-1 text-lg text-ink">{notice.title}</h2>
-              <p className="mt-2 whitespace-pre-wrap text-sm text-ink/80">{notice.body}</p>
-              <p className="mt-3 text-[11px] text-ink/40">
-                {notice.authorName} · {formatDate(notice.createdAt)}
-              </p>
-            </article>
-          ))}
+          {notices.map((notice) => {
+            const seen = notice.seenBy ?? [];
+            const mine = seen.some((row) => row.userId === user.id);
+            return (
+              <article key={notice._id} className="rounded-lg border border-line bg-panel p-4">
+                <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-forest">{notice.hostelLabel}</p>
+                <h2 className="mt-1 text-lg text-ink">{notice.title}</h2>
+                <p className="mt-2 whitespace-pre-wrap text-sm text-ink/80">{notice.body}</p>
+                <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+                  <p className="text-[11px] text-ink/40">
+                    {notice.authorName} · {formatDate(notice.createdAt)}
+                    {seen.length ? ` · Seen by ${seen.map((row) => row.name).join(", ")}` : ""}
+                  </p>
+                  {mine ? null : <NoticeSeen noticeId={notice._id} />}
+                </div>
+              </article>
+            );
+          })}
         </div>
       ) : (
         <p className="text-sm text-ink/50">Nothing on the board yet.</p>

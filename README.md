@@ -113,7 +113,7 @@ The same room cannot have two open tickets in one category. Resolved, closed, an
 
 **Notice board**
 
-Tickets stay in Postgres. Notices are a small Express app (`server/index.js`) on MongoDB. The page checks who is signed in, then calls Express with `DESK_API_KEY`. A warden’s post stays on their block. An admin’s post is for the whole campus. Students see campus notices plus their own block.
+Tickets stay in Postgres. Notices are a small Express app (`server/index.js`) on MongoDB. The page checks who is signed in, then calls Express with `DESK_API_KEY`. A warden’s post stays on their block. An admin’s post is for the whole campus. Students see campus notices plus their own block. Anyone signed in can hit **Got it**. Express stores the name on that notice, and a second click does not add it again. Sign in as the student, mark the water notice, then open the board as the warden — Aarav Mehta should be listed under it.
 
 ```bash
 npm run docker:up    # Postgres and Mongo
@@ -179,6 +179,7 @@ Local photo uploads land in `public/uploads`. On Vercel that disk is ephemeral �
 - The ticket page lists the other complaints for that room. A student still only sees their own.
 - The assign menu shows how many open jobs a worker already has. A resolved ticket is not counted.
 - The notice board is Express and Mongo. The ticket desk is still Postgres. Next only forwards the post after checking the role.
+- Got it on a notice is stored on that Mongo document. Hitting it twice does not add my name again.
 - The same room cannot get a second open ticket in the same category. That is a 409, with a link to the one already on file.
 - Docker is how another machine (or CI) gets the same Postgres.
 - GitHub Actions is how I know `main` still builds.

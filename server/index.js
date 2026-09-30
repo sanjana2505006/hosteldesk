@@ -15,6 +15,10 @@ const Notice = mongoose.model(
     hostelId: { type: String, default: "" },
     hostelLabel: { type: String, default: "Campus" },
     authorName: { type: String, required: true },
+    seenBy: {
+      type: [{ userId: String, name: String }],
+      default: [],
+    },
     createdAt: { type: Date, default: Date.now },
   }),
 );
@@ -54,6 +58,28 @@ app.post("/notices", checkKey, async (req, res) => {
     hostelLabel: req.body.hostelLabel || "Campus",
   });
   res.status(201).json({ notice });
+});
+
+app.post("/notices/:id/seen", checkKey, async (req, res) => {
+  const userId = req.body?.userId;
+  const name = req.body?.name?.trim();
+  if (!userId || !name) {
+    return res.status(400).json({ error: "Need a name." });
+  }
+  if (!mongoose.isValidObjectId(req.params.id)) {
+    return res.status(404).json({ error: "Notice not found." });
+  }
+
+  const notice = await Notice.findById(req.params.id);
+  if (!notice) return res.status(404).json({ error: "Notice not found." });
+
+  const already = (notice.seenBy || []).some((row) => row.userId === userId);
+  if (!already) {
+    notice.seenBy.push({ userId, name });
+    await notice.save();
+  }
+
+  res.json({ notice });
 });
 
 async function seedIfEmpty() {
