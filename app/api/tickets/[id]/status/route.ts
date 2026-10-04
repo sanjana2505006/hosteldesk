@@ -43,8 +43,15 @@ export async function POST(request: Request, { params }: Params) {
     return NextResponse.json({ error: "Assign a worker before marking it assigned." }, { status: 400 });
   }
 
-  const resolvedAt =
-    parsed.data.status === "RESOLVED" || parsed.data.status === "CLOSED"
+  const takingBack =
+    user.role === "STUDENT" && ticket.status === "OPEN" && parsed.data.status === "CLOSED";
+  if (takingBack && ticket.assigneeId) {
+    return NextResponse.json({ error: "A worker is already on this. Ask the warden." }, { status: 409 });
+  }
+
+  const resolvedAt = takingBack
+    ? null
+    : parsed.data.status === "RESOLVED" || parsed.data.status === "CLOSED"
       ? ticket.resolvedAt ?? new Date()
       : parsed.data.status === "OPEN" || parsed.data.status === "IN_PROGRESS"
         ? null
@@ -57,6 +64,9 @@ export async function POST(request: Request, { params }: Params) {
   }
 
   const note = parsed.data.note?.trim();
+  if (parsed.data.status === "WAITING_PARTS" && (!note || note.length < 4)) {
+    return NextResponse.json({ error: "Say which part you are waiting on." }, { status: 400 });
+  }
   const rated = parsed.data.status === "CLOSED" ? parsed.data.rating : undefined;
   let message = note
     ? `Status → ${STATUS_LABEL[parsed.data.status]}. ${note}`
@@ -65,6 +75,9 @@ export async function POST(request: Request, { params }: Params) {
     message = note
       ? `Status → Closed. Rated ${rated}/5. ${note}`
       : `Status → Closed. Rated ${rated}/5.`;
+  }
+  if (takingBack) {
+    message = note ? `Taken back. ${note}` : "Taken back before anyone was assigned.";
   }
 
   const updated = await prisma.ticket.update({

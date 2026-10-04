@@ -33,6 +33,10 @@ export const assignSchema = z.object({
   assigneeId: z.string().min(1).nullable(),
 });
 
+export const prioritySchema = z.object({
+  priority: z.enum(["LOW", "MEDIUM", "HIGH", "URGENT"]),
+});
+
 export const readAlertsSchema = z.object({
   id: z.string().min(1).optional(),
   ticketId: z.string().min(1).optional(),

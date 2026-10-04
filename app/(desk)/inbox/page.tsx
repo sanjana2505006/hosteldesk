@@ -43,7 +43,7 @@ export default async function InboxPage({ searchParams }: { searchParams: Search
   const filtering = Boolean(q || status || category || lateOnly);
 
   const open = tickets.filter((t) => !["RESOLVED", "CLOSED", "REJECTED"].includes(t.status)).length;
-  const breached = tickets.filter((t) => isSlaBreached(t.createdAt, t.priority, t.status)).length;
+  const breached = tickets.filter((t) => isSlaBreached(t.createdAt, t.priority, t.status, t.events)).length;
   const inProgress = tickets.filter((t) => t.status === "IN_PROGRESS" || t.status === "WAITING_PARTS").length;
   const resolved = tickets.filter((t) => t.status === "RESOLVED" || t.status === "CLOSED").length;
 

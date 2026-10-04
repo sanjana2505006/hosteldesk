@@ -67,7 +67,15 @@ CLOSED → OPEN
 
 - Warden / admin: full graph
 - Worker: only on tickets assigned to them, and only `IN_PROGRESS` / `WAITING_PARTS` / `RESOLVED`
-- Student: close a resolved ticket, or reopen a closed one
+- Student: take back an open ticket nobody is on, close a resolved one, or reopen a closed one
+
+**Take it back**
+
+A student can close their own ticket while it is still open and unassigned. That is the "filed the wrong room" case. If a worker is already on it, the server returns `409`. Sign in as the student and file a small one, housekeeping for A-214, then hit **Take it back**. Leave **HD-1041** alone. That leak is the late one in the inbox.
+
+**Waiting on parts**
+
+Parking a ticket on waiting for parts needs the part name in the note. An empty note returns `400`, same as closing without a rating. Sign in as the worker and open **HD-1042** (Wi-Fi, already in progress). "Mark waiting on parts" with a blank note is refused. "Capacitor for the access point" goes through and shows up on the timeline.
 
 **SLA** (`lib/sla.ts`)
 
@@ -78,7 +86,15 @@ CLOSED → OPEN
 | Medium   | 48    |
 | Low      | 72    |
 
-A ticket is breached if it is still open after that window. Resolved / closed / rejected tickets are not counted as late.
+A ticket is breached if it is still open after that window. Resolved / closed / rejected tickets are not counted as late. Hours spent **waiting on parts** are left out. That gap is read from the timeline (`Status → Waiting on parts` until the next status line), not stored as its own due date. While the ticket is parked, the badge says **paused** and the late count ignores it. If it was already late before the part was ordered, it stays red.
+
+**HD-1044** is the ceiling fan. Medium is 48 hours, and it was filed about 56 hours ago, so the wall clock is past the window. It has been waiting on a capacitor for the last 20 hours, so the inbox does not mark it late. **HD-1041** is still the red one — that leak was never parked.
+
+**Change priority**
+
+A warden or admin can raise or lower priority while the ticket is still open. The window is still `createdAt + priority`, so the clock moves and no due date is stored. Resolved, closed, and rejected tickets return `409`. A student or worker gets `403`. The change is written as an event and an alert, same as an assign.
+
+**HD-1043** is the loose chair, low priority, filed about 20 hours ago. Low is 72 hours, so it is not late. Sign in as the warden, set it to urgent (8 hours), and the inbox turns it red.
 
 **Alerts** (`lib/notify.ts`)
 
@@ -172,10 +188,13 @@ Local photo uploads land in `public/uploads`. On Vercel that disk is ephemeral �
 
 - I did **not** clone a delivery app. I modeled a real campus ops queue.
 - Double-submit and illegal status jumps are rejected on the server (`409`), not only hidden in the UI.
-- SLA is computed from `createdAt + priority`, not a stored flag that can drift.
+- SLA is computed from `createdAt + priority`, not a stored flag that can drift. Waiting on parts does not count. That pause is the gap between timeline lines, so a ticket parked on a capacitor is not late just because the wall clock passed.
+- A warden can change that priority. The window moves with it. A finished ticket returns `409`, and a student cannot do it.
 - Alerts are rows written in the same request as the ticket change. The red badge is a count of unread rows, and I don't get one for my own click.
 - A student cannot close a resolved ticket without a 1 to 5 rating. That check is on the server, same as an illegal status jump.
-- Inbox filters narrow the list. The SLA count above them is still the whole queue, computed from `createdAt + priority`.
+- A student can take back an open ticket before anyone is assigned. If a worker is already on it, that is a `409`.
+- Waiting on parts needs the part name. A blank note returns `400`.
+- Inbox filters narrow the list. The SLA count above them is still the whole queue. Waiting on parts is not counted in that clock.
 - The ticket page lists the other complaints for that room. A student still only sees their own.
 - The assign menu shows how many open jobs a worker already has. A resolved ticket is not counted.
 - The notice board is Express and Mongo. The ticket desk is still Postgres. Next only forwards the post after checking the role.

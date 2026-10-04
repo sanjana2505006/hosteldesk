@@ -8,6 +8,7 @@ type Row = Ticket & {
   hostel: Hostel;
   reporter: Pick<User, "id" | "name" | "roomNumber">;
   assignee: Pick<User, "id" | "name"> | null;
+  events: { type: string; message: string; createdAt: Date }[];
 };
 
 export function TicketRow({ ticket }: { ticket: Row }) {
@@ -27,7 +28,12 @@ export function TicketRow({ ticket }: { ticket: Row }) {
       <StatusBadge status={ticket.status} />
       <PriorityBadge priority={ticket.priority} />
       <div className="flex flex-col items-start gap-1">
-        <SlaBadge createdAt={ticket.createdAt} priority={ticket.priority} status={ticket.status} />
+        <SlaBadge
+          createdAt={ticket.createdAt}
+          priority={ticket.priority}
+          status={ticket.status}
+          events={ticket.events}
+        />
         <span className="text-[11px] text-ink/40">{formatDate(ticket.createdAt)}</span>
       </div>
     </Link>

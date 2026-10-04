@@ -1,6 +1,6 @@
 import { Priority, TicketStatus } from "@prisma/client";
 import { PRIORITY_LABEL, STATUS_LABEL } from "@/lib/labels";
-import { slaLabel } from "@/lib/sla";
+import { slaLabel, type SlaMark } from "@/lib/sla";
 import { cn } from "@/lib/utils";
 
 const statusClass: Record<TicketStatus, string> = {
@@ -38,11 +38,18 @@ export function SlaBadge({
   createdAt,
   priority,
   status,
+  events,
 }: {
   createdAt: Date;
   priority: Priority;
   status: TicketStatus;
+  events?: SlaMark[];
 }) {
-  const sla = slaLabel(createdAt, priority, status);
-  return <span className={cn("stamp", slaClass[sla.tone])}>{sla.text}</span>;
+  const sla = slaLabel(createdAt, priority, status, events);
+  return (
+    <span className="flex flex-wrap items-center gap-1">
+      <span className={cn("stamp", slaClass[sla.tone])}>{sla.text}</span>
+      {sla.paused ? <span className={cn("stamp", slaClass.risk)}>paused</span> : null}
+    </span>
+  );
 }

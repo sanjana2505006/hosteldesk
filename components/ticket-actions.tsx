@@ -1,16 +1,20 @@
 "use client";
 
-import { Role, TicketStatus } from "@prisma/client";
+import { Priority, Role, TicketStatus } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { STATUS_LABEL } from "@/lib/labels";
+import { PRIORITIES, PRIORITY_LABEL, STATUS_LABEL } from "@/lib/labels";
+import { SLA_HOURS } from "@/lib/sla";
 import { nextActions } from "@/lib/status";
 
 type Worker = { id: string; name: string; openJobs: number };
 
+const CLOCK_STOPPED: TicketStatus[] = ["RESOLVED", "CLOSED", "REJECTED"];
+
 export function TicketActions({
   ticketId,
   status,
+  priority,
   role,
   isAssignee,
   isReporter,
@@ -20,6 +24,7 @@ export function TicketActions({
 }: {
   ticketId: string;
   status: TicketStatus;
+  priority: Priority;
   role: Role;
   isAssignee: boolean;
   isReporter: boolean;
@@ -33,11 +38,16 @@ export function TicketActions({
   const [rating, setRating] = useState("");
   const actions = nextActions(status, { role, isAssignee, isReporter });
   const needsRating = role === "STUDENT" && status === "RESOLVED";
+  const needsPart = actions.includes("WAITING_PARTS");
 
   async function setStatus(next: TicketStatus) {
     setError("");
     if (needsRating && next === "CLOSED" && !rating) {
       setError("Rate the fix from 1 to 5 before you close it.");
+      return;
+    }
+    if (next === "WAITING_PARTS" && note.trim().length < 4) {
+      setError("Say which part you are waiting on.");
       return;
     }
     const res = await fetch(`/api/tickets/${ticketId}/status`, {
@@ -59,6 +69,22 @@ export function TicketActions({
     router.refresh();
   }
 
+  async function changePriority(next: string, select: HTMLSelectElement) {
+    setError("");
+    const res = await fetch(`/api/tickets/${ticketId}/priority`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ priority: next }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      select.value = priority;
+      setError(data.error ?? "Could not change priority.");
+      return;
+    }
+    router.refresh();
+  }
+
   async function assign(id: string | null) {
     setError("");
     const res = await fetch(`/api/tickets/${ticketId}/assign`, {
@@ -77,6 +103,22 @@ export function TicketActions({
   return (
     <div className="space-y-4 rounded-lg border border-line bg-panel p-4">
       <p className="text-[11px] uppercase tracking-[0.16em] text-ink/45">Actions</p>
+      {canAssignRole && !CLOCK_STOPPED.includes(status) ? (
+        <label className="block text-sm">
+          Priority
+          <select
+            defaultValue={priority}
+            onChange={(e) => changePriority(e.target.value, e.target)}
+            className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2"
+          >
+            {PRIORITIES.map((level) => (
+              <option key={level} value={level}>
+                {PRIORITY_LABEL[level]} · {SLA_HOURS[level]}h
+              </option>
+            ))}
+          </select>
+        </label>
+      ) : null}
       {canAssignRole ? (
         <label className="block text-sm">
           Assign worker
@@ -113,12 +155,14 @@ export function TicketActions({
       ) : null}
       {actions.length ? (
         <label className="block text-sm">
-          Note (optional)
+          {needsPart ? "Which part?" : "Note (optional)"}
           <input
             value={note}
             onChange={(e) => setNote(e.target.value)}
             className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2"
-            placeholder={needsRating ? "Tap still drips a little…" : "Visited room, waiting for a washer…"}
+            placeholder={
+              needsPart ? "Capacitor for the fan, ordered" : needsRating ? "Tap still drips a little…" : "Visited the room"
+            }
           />
         </label>
       ) : null}
@@ -130,7 +174,9 @@ export function TicketActions({
             onClick={() => setStatus(action)}
             className="rounded-md border border-forest/30 px-3 py-1.5 text-sm text-forest hover:bg-forest/10"
           >
-            Mark {STATUS_LABEL[action].toLowerCase()}
+            {role === "STUDENT" && status === "OPEN" && action === "CLOSED"
+              ? "Take it back"
+              : `Mark ${STATUS_LABEL[action].toLowerCase()}`}
           </button>
         ))}
         {!actions.length ? <p className="text-sm text-ink/45">No status moves from here for your role.</p> : null}

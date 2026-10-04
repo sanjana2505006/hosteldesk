@@ -10,6 +10,7 @@ type Row = {
   priority: Priority;
   createdAt: Date;
   reporter: { name: string };
+  events?: { type: string; message: string; createdAt: Date }[];
 };
 
 export function filterInbox<T extends Row>(
@@ -20,7 +21,7 @@ export function filterInbox<T extends Row>(
   return tickets.filter((ticket) => {
     if (query.status && ticket.status !== query.status) return false;
     if (query.category && ticket.category !== query.category) return false;
-    if (query.lateOnly && !isSlaBreached(ticket.createdAt, ticket.priority, ticket.status)) return false;
+    if (query.lateOnly && !isSlaBreached(ticket.createdAt, ticket.priority, ticket.status, ticket.events)) return false;
     if (!needle) return true;
     const hay = `${ticket.ref} ${ticket.title} ${ticket.roomNumber} ${ticket.reporter.name}`.toLowerCase();
     return hay.includes(needle);

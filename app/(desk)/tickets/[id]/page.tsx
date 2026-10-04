@@ -91,7 +91,12 @@ export default async function TicketPage({ params }: { params: { id: string } })
           <div className="mt-3 flex flex-wrap gap-2">
             <StatusBadge status={ticket.status} />
             <PriorityBadge priority={ticket.priority} />
-            <SlaBadge createdAt={ticket.createdAt} priority={ticket.priority} status={ticket.status} />
+            <SlaBadge
+              createdAt={ticket.createdAt}
+              priority={ticket.priority}
+              status={ticket.status}
+              events={ticket.events}
+            />
           </div>
         </div>
         <p className="whitespace-pre-wrap text-ink/80">{ticket.description}</p>
@@ -124,7 +129,10 @@ export default async function TicketPage({ params }: { params: { id: string } })
           </div>
           <div>
             <dt className="text-ink/40">SLA window</dt>
-            <dd>{SLA_HOURS[ticket.priority]} hours for {ticket.priority.toLowerCase()} priority</dd>
+            <dd>
+              {SLA_HOURS[ticket.priority]} hours for {ticket.priority.toLowerCase()} priority
+              {ticket.status === "WAITING_PARTS" ? ". Clock is paused until the part shows up." : ""}
+            </dd>
           </div>
           {ticket.rating ? (
             <div className="sm:col-span-2">
@@ -163,6 +171,7 @@ export default async function TicketPage({ params }: { params: { id: string } })
         <TicketActions
           ticketId={ticket.id}
           status={ticket.status}
+          priority={ticket.priority}
           role={user.role}
           isAssignee={ticket.assigneeId === user.id}
           isReporter={ticket.reporterId === user.id}

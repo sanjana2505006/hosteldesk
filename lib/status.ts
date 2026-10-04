@@ -28,7 +28,11 @@ export function canTransition(from: TicketStatus, to: TicketStatus, actor: Actor
 
   if (actor.role === "STUDENT") {
     if (!actor.isReporter) return false;
-    return (from === "RESOLVED" && to === "CLOSED") || (from === "CLOSED" && to === "OPEN");
+    return (
+      (from === "OPEN" && to === "CLOSED") ||
+      (from === "RESOLVED" && to === "CLOSED") ||
+      (from === "CLOSED" && to === "OPEN")
+    );
   }
 
   return false;

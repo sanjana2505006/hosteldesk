@@ -74,11 +74,12 @@ export default function HomePage() {
 
         <section id="stack" className="mt-16 rounded-lg border border-forest/20 bg-forest px-6 py-8 text-paper">
           <p className="text-[11px] uppercase tracking-[0.18em] text-paper/50">What you can defend in an interview</p>
-          <div className="mt-4 grid gap-6 md:grid-cols-5">
+          <div className="mt-4 grid gap-6 md:grid-cols-3">
             {[
               ["Next.js 14", "App Router, role-aware pages"],
               ["Prisma", "Users, hostels, tickets, events"],
-              ["PostgreSQL", "Docker Compose, migrations"],
+              ["PostgreSQL", "Tickets, Docker on 5433"],
+              ["Express + Mongo", "Notice board, separate from tickets"],
               ["NextAuth", "JWT + credentials, four roles"],
               ["GitHub Actions", "lint · validate · build"],
             ].map(([name, detail]) => (

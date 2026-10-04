@@ -44,7 +44,7 @@ export default async function BoardPage() {
               </header>
               <div className="space-y-2">
                 {column.map((ticket) => {
-                  const late = isSlaBreached(ticket.createdAt, ticket.priority, ticket.status);
+                  const late = isSlaBreached(ticket.createdAt, ticket.priority, ticket.status, ticket.events);
                   return (
                     <Link
                       key={ticket.id}
@@ -59,7 +59,12 @@ export default async function BoardPage() {
                       </p>
                       <div className="mt-2 flex flex-wrap gap-1">
                         <PriorityBadge priority={ticket.priority} />
-                        <SlaBadge createdAt={ticket.createdAt} priority={ticket.priority} status={ticket.status} />
+                        <SlaBadge
+                          createdAt={ticket.createdAt}
+                          priority={ticket.priority}
+                          status={ticket.status}
+                          events={ticket.events}
+                        />
                       </div>
                     </Link>
                   );
