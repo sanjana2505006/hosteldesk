@@ -42,7 +42,7 @@ export default async function PeoplePage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-serif text-4xl text-ink">People</h1>
+        <h1 className="text-2xl font-semibold text-ink">People</h1>
         <p className="mt-1 text-sm text-ink/55">
           Students, workers and staff attached to this desk. Worker ratings come from tickets a student closed.
         </p>

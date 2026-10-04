@@ -11,7 +11,7 @@ export default async function NewTicketPage() {
 
   return (
     <div className="mx-auto max-w-2xl">
-      <h1 className="font-serif text-4xl text-ink">File a complaint</h1>
+      <h1 className="text-2xl font-semibold text-ink">File a complaint</h1>
       <p className="mt-2 text-sm text-ink/55">
         Be specific — room, what’s failing, and how long. The SLA clock starts the moment you submit. If this room already has that category open, this form will not open a second ticket.
       </p>

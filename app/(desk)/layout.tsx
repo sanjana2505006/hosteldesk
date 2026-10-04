@@ -18,44 +18,44 @@ export default async function DeskLayout({ children }: { children: React.ReactNo
 
   return (
     <div className="min-h-screen">
-      <header className="border-b border-forest-800 bg-forest text-paper">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4">
+      <header className="sticky top-0 z-10 border-b border-line bg-white">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-3">
           <div>
-            <Link href="/inbox" className="font-serif text-xl">
+            <Link href="/inbox" className="font-semibold text-ink">
               HostelDesk
             </Link>
-            <p className="mt-0.5 text-[11px] uppercase tracking-[0.16em] text-paper/55">
+            <p className="text-xs text-ink/50">
               {user.name} · {ROLE_LABEL[user.role]}
               {user.hostelName ? ` · ${user.hostelName}` : ""}
             </p>
           </div>
-          <nav className="flex flex-wrap items-center gap-4 text-sm">
-            <Link href="/inbox" className="hover:text-white">
+          <nav className="flex flex-wrap items-center gap-1 text-sm">
+            <Link href="/inbox" className="rounded-md px-3 py-1.5 text-ink/70 hover:bg-ink/5">
               Inbox
             </Link>
-            <Link href="/alerts" className="hover:text-white">
+            <Link href="/alerts" className="rounded-md px-3 py-1.5 text-ink/70 hover:bg-ink/5">
               Alerts
               {unread ? (
-                <span className="ml-1.5 rounded-sm bg-rust px-1.5 py-0.5 font-mono text-[10px] text-white">
+                <span className="ml-1.5 rounded-full bg-rust px-1.5 py-0.5 text-[10px] text-white">
                   {unread}
                 </span>
               ) : null}
             </Link>
-            <Link href="/notices" className="hover:text-white">
+            <Link href="/notices" className="rounded-md px-3 py-1.5 text-ink/70 hover:bg-ink/5">
               Notices
             </Link>
             {user.role !== "WORKER" ? (
-              <Link href="/tickets/new" className="hover:text-white">
+              <Link href="/tickets/new" className="rounded-md px-3 py-1.5 text-ink/70 hover:bg-ink/5">
                 New ticket
               </Link>
             ) : null}
             {staff ? (
-              <Link href="/board" className="hover:text-white">
+              <Link href="/board" className="rounded-md px-3 py-1.5 text-ink/70 hover:bg-ink/5">
                 Board
               </Link>
             ) : null}
             {staff ? (
-              <Link href="/people" className="hover:text-white">
+              <Link href="/people" className="rounded-md px-3 py-1.5 text-ink/70 hover:bg-ink/5">
                 People
               </Link>
             ) : null}

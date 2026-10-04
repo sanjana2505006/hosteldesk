@@ -45,7 +45,7 @@ export default async function NoticesPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       <div>
-        <h1 className="font-serif text-4xl text-ink">Notice board</h1>
+        <h1 className="text-2xl font-semibold text-ink">Notice board</h1>
         <p className="mt-1 text-sm text-ink/55">Water cuts, Wi-Fi work, anything that is not a room ticket.</p>
       </div>
 

@@ -24,7 +24,7 @@ export default async function AlertsPage() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="font-serif text-4xl text-ink">Alerts</h1>
+          <h1 className="text-2xl font-semibold text-ink">Alerts</h1>
           <p className="mt-1 text-sm text-ink/55">
             Pings for tickets you didn&apos;t just touch. Opening one clears it.
           </p>

@@ -87,7 +87,7 @@ export default async function TicketPage({ params }: { params: { id: string } })
       <article className="space-y-6">
         <div>
           <p className="font-mono text-xs text-forest">{ticket.ref}</p>
-          <h1 className="mt-2 font-serif text-4xl text-ink">{ticket.title}</h1>
+          <h1 className="mt-2 text-2xl font-semibold text-ink">{ticket.title}</h1>
           <div className="mt-3 flex flex-wrap gap-2">
             <StatusBadge status={ticket.status} />
             <PriorityBadge priority={ticket.priority} />

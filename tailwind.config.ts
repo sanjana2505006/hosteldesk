@@ -9,14 +9,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#1c1915",
-        paper: "#f3eee4",
-        panel: "#fffdf8",
-        line: "#d8cfc0",
+        ink: "#111827",
+        paper: "#ffffff",
+        panel: "#ffffff",
+        line: "#e5e7eb",
         forest: {
-          DEFAULT: "#2c4a3c",
-          600: "#3d6b54",
-          800: "#1d3228",
+          DEFAULT: "#0f7a4a",
+          600: "#14915a",
+          800: "#0c5c38",
         },
         rust: "#c24a1a",
         amber: "#b8862a",
@@ -28,7 +28,7 @@ const config: Config = {
         mono: ["var(--font-geist-mono)", "ui-monospace", "monospace"],
       },
       boxShadow: {
-        desk: "0 18px 40px -24px rgba(28, 25, 21, 0.45)",
+        desk: "0 8px 24px -16px rgba(17, 24, 39, 0.25)",
       },
     },
   },
