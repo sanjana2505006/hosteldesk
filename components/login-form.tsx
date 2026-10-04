@@ -79,7 +79,7 @@ export function LoginForm() {
         <button
           type="submit"
           disabled={pending}
-          className="w-full rounded-md bg-forest px-4 py-2.5 text-sm font-medium text-paper hover:bg-forest-600 disabled:opacity-60"
+          className="w-full rounded-full bg-forest px-4 py-2.5 text-[17px] text-white transition-colors duration-200 hover:bg-forest-600 disabled:opacity-60"
         >
           {pending ? "Opening desk…" : "Enter the desk"}
         </button>

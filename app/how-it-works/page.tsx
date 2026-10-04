@@ -8,9 +8,9 @@ export default function HowItWorksPage() {
   return (
     <div className="min-h-screen">
       <SiteHeader />
-      <main className="mx-auto max-w-5xl px-4 py-8">
-        <h1 className="text-2xl font-semibold text-ink">How a complaint moves</h1>
-        <p className="mt-2 max-w-xl text-sm leading-6 text-ink/70">
+      <main className="mx-auto max-w-5xl px-5 pb-16 pt-14">
+        <h1 className="text-4xl font-semibold text-ink sm:text-5xl">How a complaint moves.</h1>
+        <p className="mt-4 max-w-xl text-[19px] leading-snug text-[#6e6e73]">
           This is the path a ticket takes after a student files it. The server rejects a jump that is not in the
           table below.
         </p>
@@ -22,8 +22,8 @@ export default function HowItWorksPage() {
           <li>The student closes a resolved ticket and rates the fix from 1 to 5. An open ticket with nobody assigned can be taken back.</li>
         </ol>
 
-        <h2 className="mt-10 text-base font-semibold text-ink">Status moves</h2>
-        <div className="mt-3 overflow-x-auto rounded-xl border border-line bg-white shadow-sm">
+        <h2 className="mt-12 text-2xl font-semibold tracking-tight text-ink">Status moves</h2>
+        <div className="mt-3 overflow-x-auto rounded-2xl bg-white">
           <table className="w-full text-left text-sm">
             <thead className="border-b border-line text-ink/55">
               <tr>
@@ -44,8 +44,8 @@ export default function HowItWorksPage() {
           </table>
         </div>
 
-        <h2 className="mt-10 text-base font-semibold text-ink">How long before it is late</h2>
-        <div className="mt-3 overflow-x-auto rounded-xl border border-line bg-white shadow-sm">
+        <h2 className="mt-12 text-2xl font-semibold tracking-tight text-ink">How long before it is late</h2>
+        <div className="mt-3 overflow-x-auto rounded-2xl bg-white">
           <table className="w-full max-w-md text-left text-sm">
             <thead className="border-b border-line text-ink/55">
               <tr>

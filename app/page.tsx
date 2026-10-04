@@ -44,53 +44,53 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen">
       <SiteHeader />
-      <main className="mx-auto max-w-5xl px-4 py-8">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <h1 className="text-2xl font-semibold text-ink">Hostel complaint desk</h1>
-            <p className="mt-2 max-w-xl text-sm leading-6 text-ink/70">
-              Students file a room complaint. Wardens assign a worker. The list below is what is on the desk right now.
-              Sign in to open a ticket.
-            </p>
-          </div>
-          <Link href="/login" className="rounded-md bg-forest px-4 py-2 text-sm text-white">
-            Login
+      <main className="mx-auto max-w-5xl px-5 pb-16 pt-14">
+        <div className="max-w-2xl">
+          <h1 className="text-4xl font-semibold leading-tight text-ink sm:text-5xl">Hostel complaint desk.</h1>
+          <p className="mt-4 max-w-xl text-[19px] leading-snug text-[#6e6e73]">
+            Students file a room complaint. Wardens assign a worker. The list below is what is on the desk right now.
+          </p>
+          <Link
+            href="/login"
+            className="mt-6 inline-block rounded-full bg-forest px-5 py-2 text-[17px] text-white transition-colors duration-200 hover:bg-forest-600"
+          >
+            Sign in
           </Link>
         </div>
 
-        <div className="mt-6 grid gap-3 sm:grid-cols-3">
-          <div className="rounded-xl border border-line bg-white px-4 py-3 shadow-sm">
-            <p className="text-sm text-ink/55">Open</p>
-            <p className="mt-1 text-2xl font-semibold">{open}</p>
+        <div className="mt-12 grid gap-px overflow-hidden rounded-2xl bg-line sm:grid-cols-3">
+          <div className="bg-white px-6 py-5">
+            <p className="text-[12px] text-[#6e6e73]">Open</p>
+            <p className="mt-1 text-4xl font-semibold tracking-tight">{open}</p>
           </div>
-          <div className="rounded-xl border border-line bg-white px-4 py-3 shadow-sm">
-            <p className="text-sm text-ink/55">Late</p>
-            <p className="mt-1 text-2xl font-semibold text-rust">{late}</p>
+          <div className="bg-white px-6 py-5">
+            <p className="text-[12px] text-[#6e6e73]">Late</p>
+            <p className="mt-1 text-4xl font-semibold tracking-tight text-rust">{late}</p>
           </div>
-          <div className="rounded-xl border border-line bg-white px-4 py-3 shadow-sm">
-            <p className="text-sm text-ink/55">Resolved or closed</p>
-            <p className="mt-1 text-2xl font-semibold">{closed}</p>
+          <div className="bg-white px-6 py-5">
+            <p className="text-[12px] text-[#6e6e73]">Resolved or closed</p>
+            <p className="mt-1 text-4xl font-semibold tracking-tight">{closed}</p>
           </div>
         </div>
 
-        <div className="mt-8 flex items-baseline justify-between gap-3">
-          <h2 className="text-base font-semibold text-ink">Latest complaints</h2>
-          <Link href="/complaints" className="text-sm text-forest underline">
-            All complaints
+        <div className="mt-14 flex items-baseline justify-between gap-3">
+          <h2 className="text-2xl font-semibold tracking-tight text-ink">Latest complaints</h2>
+          <Link href="/complaints" className="text-[17px] text-forest transition-colors duration-200 hover:underline">
+            See all
           </Link>
         </div>
         <div className="mt-3">
           <PublicTicketTable tickets={tickets.slice(0, 5)} />
         </div>
 
-        <h2 className="mt-10 text-base font-semibold text-ink">Demo accounts</h2>
-        <p className="mt-1 text-sm text-ink/60">
+        <h2 className="mt-14 text-2xl font-semibold tracking-tight text-ink">Demo accounts</h2>
+        <p className="mt-2 text-[17px] text-[#6e6e73]">
           Pick one and sign in. Each role only sees its own queue.{" "}
-          <Link href="/how-it-works" className="text-forest underline">
+          <Link href="/how-it-works" className="text-forest hover:underline">
             How a ticket moves
           </Link>
         </p>
-        <div className="mt-3 overflow-x-auto rounded-xl border border-line bg-white shadow-sm">
+        <div className="mt-4 overflow-x-auto rounded-2xl bg-white">
           <table className="w-full text-left text-sm">
             <thead className="border-b border-line text-ink/55">
               <tr>

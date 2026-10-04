@@ -11,10 +11,10 @@ export default async function RegisterPage() {
   return (
     <div className="min-h-screen">
       <SiteHeader />
-      <div className="mx-auto flex max-w-md flex-col px-6 py-12">
-        <h1 className="text-2xl font-semibold text-ink">Join as a student</h1>
-        <p className="mt-2 text-sm text-ink/55">Wardens and workers are created by admin seed / desk staff.</p>
-        <div className="mt-8 rounded-lg border border-line bg-panel p-6 shadow-desk">
+      <div className="mx-auto flex max-w-md flex-col px-6 pb-16 pt-16">
+        <h1 className="text-4xl font-semibold text-ink">Join as a student.</h1>
+        <p className="mt-3 text-[17px] text-[#6e6e73]">Wardens and workers are created by admin seed / desk staff.</p>
+        <div className="mt-8 rounded-2xl bg-white p-6 shadow-desk">
           {hostels.length ? (
             <RegisterForm hostels={hostels} />
           ) : (

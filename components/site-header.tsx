@@ -13,29 +13,28 @@ export function SiteHeader() {
   const path = usePathname();
 
   return (
-    <header className="sticky top-0 z-10 border-b border-line bg-white">
-      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-3">
-        <Link href="/" className="font-semibold text-ink">
+    <header className="frost sticky top-0 z-20 border-b border-black/10">
+      <div className="mx-auto flex h-12 max-w-5xl items-center justify-between gap-4 px-5">
+        <Link href="/" className="text-[15px] font-semibold tracking-tight text-ink">
           HostelDesk
         </Link>
-        <nav className="flex flex-wrap items-center gap-1 text-sm">
+        <nav className="flex items-center gap-5 text-[12px] text-ink/80">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={
-                path === link.href
-                  ? "rounded-md bg-forest/10 px-3 py-1.5 font-medium text-forest"
-                  : "rounded-md px-3 py-1.5 text-ink/60 hover:bg-ink/5 hover:text-ink"
-              }
+              className={`transition-colors duration-200 hover:text-ink ${path === link.href ? "text-ink" : ""}`}
             >
               {link.label}
             </Link>
           ))}
-          <Link href="/login" className="rounded-md px-3 py-1.5 text-ink/60 hover:bg-ink/5 hover:text-ink">
+          <Link href="/login" className="transition-colors duration-200 hover:text-ink">
             Login
           </Link>
-          <Link href="/register" className="ml-1 rounded-md bg-forest px-3 py-1.5 text-white">
+          <Link
+            href="/register"
+            className="rounded-full bg-forest px-3 py-1 text-white transition-colors duration-200 hover:bg-forest-600"
+          >
             Register
           </Link>
         </nav>

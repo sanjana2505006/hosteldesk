@@ -9,26 +9,33 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#111827",
+        ink: "#1d1d1f",
         paper: "#ffffff",
         panel: "#ffffff",
-        line: "#e5e7eb",
+        line: "#d2d2d7",
         forest: {
-          DEFAULT: "#0f7a4a",
-          600: "#14915a",
-          800: "#0c5c38",
+          DEFAULT: "#0071e3",
+          600: "#0077ed",
+          800: "#0066cc",
         },
-        rust: "#c24a1a",
-        amber: "#b8862a",
-        moss: "#5c7a48",
+        rust: "#ff3b30",
+        amber: "#ff9f0a",
+        moss: "#34c759",
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
+        sans: [
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "SF Pro Text",
+          "Segoe UI",
+          "var(--font-geist-sans)",
+          "sans-serif",
+        ],
         serif: ["var(--font-serif)", "Georgia", "serif"],
         mono: ["var(--font-geist-mono)", "ui-monospace", "monospace"],
       },
       boxShadow: {
-        desk: "0 8px 24px -16px rgba(17, 24, 39, 0.25)",
+        desk: "0 12px 40px -24px rgba(0, 0, 0, 0.18)",
       },
     },
   },

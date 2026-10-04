@@ -3,8 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --background: #f5f7f8;
-  --foreground: #111827;
+  --background: #f5f5f7;
+  --foreground: #1d1d1f;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 html,
@@ -15,10 +19,21 @@ body {
 
 body {
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+  letter-spacing: -0.022em;
+}
+
+.frost {
+  background: rgba(251, 251, 253, 0.8);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
 }
 
 @layer components {
   .stamp {
-    @apply inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium;
+    @apply inline-flex items-center rounded-full border-0 px-2.5 py-0.5 text-[12px] font-medium;
   }
 }

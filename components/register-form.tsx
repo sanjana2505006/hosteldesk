@@ -73,7 +73,7 @@ export function RegisterForm({ hostels }: { hostels: Hostel[] }) {
       {error ? <p className="text-sm text-rust">{error}</p> : null}
       <button
         disabled={pending}
-        className="w-full rounded-md bg-forest px-4 py-2.5 text-sm font-medium text-paper hover:bg-forest-600 disabled:opacity-60"
+        className="w-full rounded-full bg-forest px-4 py-2.5 text-[17px] text-white transition-colors duration-200 hover:bg-forest-600 disabled:opacity-60"
       >
         {pending ? "Creating…" : "Create student account"}
       </button>

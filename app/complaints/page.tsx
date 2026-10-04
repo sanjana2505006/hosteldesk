@@ -28,9 +28,9 @@ export default async function ComplaintsPage() {
   return (
     <div className="min-h-screen">
       <SiteHeader />
-      <main className="mx-auto max-w-5xl px-4 py-8">
-        <h1 className="text-2xl font-semibold text-ink">Complaints</h1>
-        <p className="mt-2 max-w-xl text-sm leading-6 text-ink/70">
+      <main className="mx-auto max-w-5xl px-5 pb-16 pt-14">
+        <h1 className="text-4xl font-semibold text-ink sm:text-5xl">Complaints.</h1>
+        <p className="mt-4 max-w-xl text-[19px] leading-snug text-[#6e6e73]">
           Every ticket on the desk, newest first. Room and status are public here. The description, photos, and
           comments stay behind login.{" "}
           <Link href="/login" className="text-forest underline">
