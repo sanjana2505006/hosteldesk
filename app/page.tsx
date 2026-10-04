@@ -46,9 +46,6 @@ export default function HomePage() {
               <Link href="/login" className="rounded-md bg-rust px-5 py-2.5 text-sm font-medium text-white">
                 Try the demo
               </Link>
-              <a href="#stack" className="rounded-md border border-line px-5 py-2.5 text-sm text-ink/70">
-                See the stack
-              </a>
             </div>
           </div>
           <aside className="rounded-lg border border-line bg-panel p-5 shadow-desk">
@@ -70,25 +67,6 @@ export default function HomePage() {
               <p className="mt-2 text-sm leading-6 text-ink/65">{role.body}</p>
             </article>
           ))}
-        </section>
-
-        <section id="stack" className="mt-16 rounded-lg border border-forest/20 bg-forest px-6 py-8 text-paper">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-paper/50">What you can defend in an interview</p>
-          <div className="mt-4 grid gap-6 md:grid-cols-3">
-            {[
-              ["Next.js 14", "App Router, role-aware pages"],
-              ["Prisma", "Users, hostels, tickets, events"],
-              ["PostgreSQL", "Tickets, Docker on 5433"],
-              ["Express + Mongo", "Notice board, separate from tickets"],
-              ["NextAuth", "JWT + credentials, four roles"],
-              ["GitHub Actions", "lint · validate · build"],
-            ].map(([name, detail]) => (
-              <div key={name}>
-                <p className="font-serif text-xl">{name}</p>
-                <p className="mt-1 text-xs text-paper/60">{detail}</p>
-              </div>
-            ))}
-          </div>
         </section>
       </main>
     </div>
