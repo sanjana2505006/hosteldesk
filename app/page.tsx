@@ -1,73 +1,74 @@
 import Link from "next/link";
 
-const roles = [
-  {
-    title: "Student",
-    body: "File a leak, a dead fan, a stuck latch. Photo, room, priority. Track it without pinging the warden twice.",
-  },
-  {
-    title: "Warden",
-    body: "One inbox. Assign the plumber. See which tickets blew their SLA. No more scrolling a 400-message group.",
-  },
-  {
-    title: "Worker",
-    body: "Your jobs, your status moves: in progress, waiting on parts, resolved. The timeline is the record.",
-  },
+const demos = [
+  ["Student", "student@hosteldesk.dev", "student123"],
+  ["Warden", "warden@hosteldesk.dev", "warden123"],
+  ["Worker", "worker@hosteldesk.dev", "worker123"],
+  ["Admin", "admin@hosteldesk.dev", "admin123"],
 ];
 
 export default function HomePage() {
   return (
     <div className="min-h-screen">
-      <header className="mx-auto flex max-w-5xl items-center justify-between px-6 py-6">
-        <p className="font-serif text-xl text-forest">HostelDesk</p>
-        <div className="flex gap-3 text-sm">
-          <Link href="/login" className="rounded-md px-3 py-1.5 text-ink/70 hover:text-ink">
-            Sign in
-          </Link>
-          <Link href="/login" className="rounded-md bg-forest px-3 py-1.5 text-paper">
-            Open the desk
-          </Link>
+      <header className="border-b border-line bg-panel">
+        <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-3">
+          <p className="font-medium text-ink">HostelDesk</p>
+          <div className="flex gap-4 text-sm">
+            <Link href="/login" className="text-ink/70 hover:text-ink">
+              Login
+            </Link>
+            <Link href="/register" className="text-ink/70 hover:text-ink">
+              Register
+            </Link>
+          </div>
         </div>
       </header>
 
-      <main className="mx-auto max-w-5xl px-6 pb-20">
-        <section className="grid gap-10 pb-16 pt-8 md:grid-cols-[1.2fr_0.8fr] md:items-end">
-          <div>
-            <p className="stamp border-rust/40 text-rust">Campus operations · not another grocery clone</p>
-            <h1 className="mt-5 font-serif text-5xl leading-[1.05] text-ink md:text-6xl">
-              The warden’s desk,
-              <br />
-              without the WhatsApp group.
-            </h1>
-            <p className="mt-5 max-w-xl text-lg text-ink/65">
-              Hostel complaints get a ticket, a worker, and a clock. If a leak sits past its SLA, the board turns red — not the group chat.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/login" className="rounded-md bg-rust px-5 py-2.5 text-sm font-medium text-white">
-                Try the demo
-              </Link>
-            </div>
-          </div>
-          <aside className="rounded-lg border border-line bg-panel p-5 shadow-desk">
-            <p className="text-[11px] uppercase tracking-[0.16em] text-ink/40">Demo logins</p>
-            <ul className="mt-3 space-y-2 font-mono text-xs text-ink/80">
-              <li>student@hosteldesk.dev / student123</li>
-              <li>warden@hosteldesk.dev / warden123</li>
-              <li>worker@hosteldesk.dev / worker123</li>
-              <li>admin@hosteldesk.dev / admin123</li>
-            </ul>
-            <p className="mt-4 text-xs text-ink/45">Seeded tickets include a 3-day leak that has already breached SLA.</p>
-          </aside>
-        </section>
+      <main className="mx-auto max-w-3xl px-4 py-8">
+        <h1 className="text-2xl font-semibold text-ink">Hostel complaint desk</h1>
+        <p className="mt-2 max-w-xl text-sm leading-6 text-ink/75">
+          A student files a complaint for their room. The warden assigns a worker. The ticket then moves
+          through open, assigned, in progress, and resolved. If it sits too long, the inbox marks it late.
+        </p>
+        <div className="mt-5">
+          <Link href="/login" className="rounded-md bg-forest px-4 py-2 text-sm text-white">
+            Login
+          </Link>
+        </div>
 
-        <section className="grid gap-4 md:grid-cols-3">
-          {roles.map((role) => (
-            <article key={role.title} className="rounded-lg border border-line bg-panel p-5">
-              <h2 className="font-serif text-2xl text-forest">{role.title}</h2>
-              <p className="mt-2 text-sm leading-6 text-ink/65">{role.body}</p>
-            </article>
-          ))}
-        </section>
+        <h2 className="mt-10 text-base font-semibold text-ink">Demo accounts</h2>
+        <p className="mt-1 text-sm text-ink/60">These are seeded. Use them to click around.</p>
+        <div className="mt-3 overflow-x-auto rounded-md border border-line bg-panel">
+          <table className="w-full text-left text-sm">
+            <thead className="border-b border-line text-ink/60">
+              <tr>
+                <th className="px-3 py-2 font-medium">Role</th>
+                <th className="px-3 py-2 font-medium">Email</th>
+                <th className="px-3 py-2 font-medium">Password</th>
+              </tr>
+            </thead>
+            <tbody>
+              {demos.map(([role, email, password]) => (
+                <tr key={email} className="border-b border-line last:border-0">
+                  <td className="px-3 py-2">{role}</td>
+                  <td className="px-3 py-2">{email}</td>
+                  <td className="px-3 py-2">{password}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-3 text-sm text-ink/60">
+          HD-1041 is a leak that is already late. HD-1044 is waiting on a part, so its clock is paused.
+        </p>
+
+        <h2 className="mt-10 text-base font-semibold text-ink">Who sees what</h2>
+        <ul className="mt-2 list-disc space-y-1 pl-5 text-sm leading-6 text-ink/75">
+          <li>Student: only their own tickets. They can file one, comment, and close a resolved ticket after a rating.</li>
+          <li>Warden: tickets for their hostel. They assign workers and can change priority.</li>
+          <li>Worker: only jobs assigned to them. They move the status.</li>
+          <li>Admin: every hostel.</li>
+        </ul>
       </main>
     </div>
   );
