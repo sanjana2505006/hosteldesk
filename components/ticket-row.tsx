@@ -15,7 +15,7 @@ export function TicketRow({ ticket }: { ticket: Row }) {
   return (
     <Link
       href={`/tickets/${ticket.id}`}
-      className="grid grid-cols-1 gap-3 border-b border-line px-4 py-4 transition hover:bg-[#fbf6ec] md:grid-cols-[88px_1fr_140px_120px_140px] md:items-center"
+      className="grid grid-cols-1 gap-3 border-b border-line px-4 py-4 transition hover:bg-black/[0.03] md:grid-cols-[88px_1fr_140px_120px_140px] md:items-center"
     >
       <p className="font-mono text-sm text-forest">{ticket.ref}</p>
       <div>

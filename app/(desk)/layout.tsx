@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
-import { SignOutButton } from "@/components/sign-out-button";
+import { DeskLink, DeskNav } from "@/components/desk-nav";
 import { ROLE_LABEL } from "@/lib/labels";
 import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/session";
@@ -11,56 +10,29 @@ export default async function DeskLayout({ children }: { children: React.ReactNo
   const user = await requireUser();
   if (!user) redirect("/login");
 
-  const staff = user.role === "WARDEN" || user.role === "ADMIN";
   const unread = await prisma.alert.count({
     where: { userId: user.id, readAt: null },
   });
 
+  const links: DeskLink[] = [];
+  if (user.role === "STUDENT") {
+    links.push({ href: "/inbox", label: "Complaints" }, { href: "/tickets/new", label: "New ticket" });
+  } else if (user.role === "WORKER") {
+    links.push({ href: "/inbox", label: "Jobs" });
+  } else {
+    links.push(
+      { href: "/inbox", label: "Inbox" },
+      { href: "/board", label: "Board" },
+      { href: "/people", label: "People" },
+      { href: "/tickets/new", label: "New ticket" },
+    );
+  }
+  links.push({ href: "/alerts", label: "Alerts", badge: unread || undefined }, { href: "/notices", label: "Notices" });
+
   return (
     <div className="min-h-screen">
-      <header className="frost sticky top-0 z-20 border-b border-black/10">
-        <div className="mx-auto flex min-h-12 max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-5 py-2">
-          <Link href="/inbox" className="text-lg font-semibold tracking-tight text-ink">
-            HostelDesk
-          </Link>
-          <nav className="flex flex-wrap items-center gap-x-5 gap-y-1 text-base text-ink/80">
-            <Link href="/inbox" className="transition-colors duration-200 hover:text-ink">
-              Inbox
-            </Link>
-            <Link href="/alerts" className="transition-colors duration-200 hover:text-ink">
-              Alerts
-              {unread ? (
-                <span className="ml-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-rust px-1.5 text-xs text-white">
-                  {unread}
-                </span>
-              ) : null}
-            </Link>
-            <Link href="/notices" className="transition-colors duration-200 hover:text-ink">
-              Notices
-            </Link>
-            {user.role !== "WORKER" ? (
-              <Link href="/tickets/new" className="transition-colors duration-200 hover:text-ink">
-                New ticket
-              </Link>
-            ) : null}
-            {staff ? (
-              <Link href="/board" className="transition-colors duration-200 hover:text-ink">
-                Board
-              </Link>
-            ) : null}
-            {staff ? (
-              <Link href="/people" className="transition-colors duration-200 hover:text-ink">
-                People
-              </Link>
-            ) : null}
-            <span className="text-ink/40">
-              {user.name} · {ROLE_LABEL[user.role]}
-            </span>
-            <SignOutButton />
-          </nav>
-        </div>
-      </header>
-      <div className="mx-auto max-w-6xl px-6 py-8">{children}</div>
+      <DeskNav name={user.name ?? "Signed in"} roleLabel={ROLE_LABEL[user.role]} links={links} />
+      <div className="mx-auto max-w-6xl px-4 py-6 pb-28 sm:px-6 md:pb-8">{children}</div>
     </div>
   );
 }

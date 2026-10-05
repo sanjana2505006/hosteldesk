@@ -61,16 +61,16 @@ export function TicketForm({
     <form onSubmit={onSubmit} className="space-y-4">
       <label className="block text-sm">
         What’s broken?
-        <input name="title" required minLength={4} placeholder="Tap leaking in the washbasin" className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2" />
+        <input name="title" required minLength={4} placeholder="Tap leaking in the washbasin" className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2.5 text-base" />
       </label>
       <label className="block text-sm">
         Details the worker needs
-        <textarea name="description" required minLength={10} rows={5} className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2" />
+        <textarea name="description" required minLength={10} rows={5} className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2.5 text-base" />
       </label>
       <div className="grid gap-4 sm:grid-cols-3">
         <label className="block text-sm">
           Category
-          <select name="category" className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2">
+          <select name="category" className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2.5 text-base">
             {CATEGORIES.map((c) => (
               <option key={c} value={c}>
                 {CATEGORY_LABEL[c]}
@@ -80,7 +80,7 @@ export function TicketForm({
         </label>
         <label className="block text-sm">
           Priority
-          <select name="priority" defaultValue="MEDIUM" className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2">
+          <select name="priority" defaultValue="MEDIUM" className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2.5 text-base">
             {PRIORITIES.map((p) => (
               <option key={p} value={p}>
                 {PRIORITY_LABEL[p]}
@@ -95,7 +95,7 @@ export function TicketForm({
             defaultValue={defaultRoom ?? ""}
             readOnly={lockRoom}
             required
-            className={`mt-1 w-full rounded-md border border-line px-3 py-2 ${lockRoom ? "bg-black/5 text-ink/70" : "bg-white"}`}
+            className={`mt-1 w-full rounded-md border border-line px-3 py-2.5 text-base ${lockRoom ? "bg-black/5 text-ink/70" : "bg-white"}`}
           />
           {lockRoom ? <span className="mt-1 block text-ink/50">Only your own room.</span> : null}
         </label>
@@ -126,7 +126,7 @@ export function TicketForm({
       ) : null}
       <button
         disabled={pending}
-        className="rounded-md bg-rust px-4 py-2.5 text-sm font-medium text-white hover:bg-[#a33d14] disabled:opacity-60"
+        className="w-full rounded-full bg-forest px-4 py-3 text-base text-white hover:bg-forest-600 disabled:opacity-60 sm:w-auto"
       >
         {pending ? "Filing…" : "File complaint"}
       </button>

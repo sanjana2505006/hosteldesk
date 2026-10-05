@@ -55,36 +55,39 @@ export default async function InboxPage({ searchParams }: { searchParams: Search
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="text-2xl font-semibold text-ink">{heading}</h1>
-          <p className="mt-1 text-sm text-ink/55">
-            {user.role === "WARDEN"
-              ? "Assign work. Anything red has already missed its SLA."
+          <p className="mt-1 text-base text-ink/55">
+            {user.role === "WARDEN" || user.role === "ADMIN"
+              ? "Assign a worker. Anything red is already late."
               : user.role === "WORKER"
-                ? "Pick up an assigned job and move the status."
-                : "File a ticket instead of texting the caretaker."}
+                ? "These are the jobs assigned to you."
+                : "These are the complaints for your room."}
           </p>
         </div>
         {user.role !== "WORKER" ? (
-          <Link href="/tickets/new" className="rounded-md bg-rust px-4 py-2 text-sm font-medium text-white">
-            New ticket
+          <Link
+            href="/tickets/new"
+            className="inline-flex w-full items-center justify-center rounded-full bg-forest px-5 py-3 text-base text-white sm:w-auto"
+          >
+            {user.role === "STUDENT" ? "File a complaint" : "New ticket"}
           </Link>
         ) : null}
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Open queue" value={open} />
-        <StatCard label="SLA breached" value={breached} alert={breached > 0} hint="Unresolved past deadline" />
-        <StatCard label="Being worked" value={inProgress} />
-        <StatCard label="Resolved / closed" value={resolved} />
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <StatCard label="Open" value={open} />
+        <StatCard label="Late" value={breached} alert={breached > 0} hint="Unresolved past deadline" />
+        <StatCard label="In progress" value={inProgress} />
+        <StatCard label="Done" value={resolved} />
       </div>
 
-      <form method="get" className="flex flex-wrap items-end gap-2">
-        <label className="text-sm">
+      <form method="get" className="grid grid-cols-1 gap-3 sm:flex sm:flex-wrap sm:items-end">
+        <label className="text-sm sm:w-48">
           Search
           <input
             name="q"
             defaultValue={q}
             placeholder="Room, ref, or title"
-            className="mt-1 block w-48 rounded-md border border-line bg-white px-3 py-2"
+            className="mt-1 block w-full rounded-md border border-line bg-white px-3 py-2.5 text-base"
           />
         </label>
         <label className="text-sm">
@@ -92,7 +95,7 @@ export default async function InboxPage({ searchParams }: { searchParams: Search
           <select
             name="status"
             defaultValue={status ?? ""}
-            className="mt-1 block rounded-md border border-line bg-white px-3 py-2"
+            className="mt-1 block w-full rounded-md border border-line bg-white px-3 py-2.5 text-base sm:w-auto"
           >
             <option value="">Any</option>
             {STATUSES.map((item) => (
@@ -107,7 +110,7 @@ export default async function InboxPage({ searchParams }: { searchParams: Search
           <select
             name="category"
             defaultValue={category ?? ""}
-            className="mt-1 block rounded-md border border-line bg-white px-3 py-2"
+            className="mt-1 block w-full rounded-md border border-line bg-white px-3 py-2.5 text-base sm:w-auto"
           >
             <option value="">Any</option>
             {CATEGORIES.map((item) => (
@@ -121,7 +124,7 @@ export default async function InboxPage({ searchParams }: { searchParams: Search
           <input type="checkbox" name="late" value="1" defaultChecked={lateOnly} />
           Late only
         </label>
-        <button className="rounded-md bg-forest px-3 py-2 text-sm text-paper">Filter</button>
+        <button className="rounded-full bg-forest px-4 py-2.5 text-base text-white">Filter</button>
         {filtering ? (
           <Link href="/inbox" className="mb-2 text-sm text-ink/55">
             Clear

@@ -48,8 +48,8 @@ export default async function PeoplePage() {
           Students, workers and staff attached to this desk. Worker ratings come from tickets a student closed.
         </p>
       </div>
-      <div className="overflow-hidden rounded-lg border border-line bg-panel shadow-desk">
-        <table className="w-full text-left text-sm">
+      <div className="overflow-x-auto rounded-lg border border-line bg-panel shadow-desk">
+        <table className="w-full min-w-[720px] text-left text-sm">
           <thead className="border-b border-line font-mono text-[10px] uppercase tracking-[0.14em] text-ink/40">
             <tr>
               <th className="px-4 py-2">Name</th>

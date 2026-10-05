@@ -50,12 +50,20 @@ export default async function HomePage() {
           <p className="mt-4 max-w-xl text-[19px] leading-snug text-[#6e6e73]">
             Students file a room complaint. Wardens assign a worker. The list below is what is on the desk right now.
           </p>
-          <Link
-            href="/login"
-            className="mt-6 inline-block rounded-full bg-forest px-5 py-2 text-[17px] text-white transition-colors duration-200 hover:bg-forest-600"
-          >
-            Sign in
-          </Link>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <Link
+              href="/register"
+              className="rounded-full bg-forest px-5 py-2.5 text-center text-[17px] text-white transition-colors duration-200 hover:bg-forest-600"
+            >
+              Register
+            </Link>
+            <Link
+              href="/login"
+              className="rounded-full bg-white px-5 py-2.5 text-center text-[17px] text-ink transition-colors duration-200 hover:bg-black/[0.03]"
+            >
+              Sign in
+            </Link>
+          </div>
         </div>
 
         <div className="mt-12 grid gap-px overflow-hidden rounded-2xl bg-line sm:grid-cols-3">
@@ -90,7 +98,16 @@ export default async function HomePage() {
             How a ticket moves
           </Link>
         </p>
-        <div className="mt-4 overflow-x-auto rounded-2xl bg-white">
+        <ul className="mt-4 space-y-3 sm:hidden">
+          {demos.map(([role, email, password]) => (
+            <li key={email} className="rounded-2xl bg-white px-4 py-3">
+              <p className="font-medium">{role}</p>
+              <p className="mt-1 text-base text-[#6e6e73]">{email}</p>
+              <p className="text-base text-[#6e6e73]">{password}</p>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-4 hidden overflow-x-auto rounded-2xl bg-white sm:block">
           <table className="w-full text-left text-base">
             <thead className="border-b border-line text-ink/55">
               <tr>

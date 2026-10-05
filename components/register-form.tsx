@@ -46,19 +46,19 @@ export function RegisterForm({ hostels }: { hostels: Hostel[] }) {
     <form onSubmit={onSubmit} className="space-y-4">
       <label className="block text-sm">
         Full name
-        <input name="name" required className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2" />
+        <input name="name" required className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2.5 text-base" />
       </label>
       <label className="block text-sm">
         College email
-        <input name="email" type="email" required className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2" />
+        <input name="email" type="email" required className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2.5 text-base" />
       </label>
       <label className="block text-sm">
         Password
-        <input name="password" type="password" minLength={6} required className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2" />
+        <input name="password" type="password" minLength={6} required className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2.5 text-base" />
       </label>
       <label className="block text-sm">
         Hostel
-        <select name="hostelId" required className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2">
+        <select name="hostelId" required className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2.5 text-base">
           {hostels.map((h) => (
             <option key={h.id} value={h.id}>
               {h.name} · {h.block}
@@ -68,7 +68,7 @@ export function RegisterForm({ hostels }: { hostels: Hostel[] }) {
       </label>
       <label className="block text-sm">
         Room
-        <input name="roomNumber" placeholder="A-214" required className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2" />
+        <input name="roomNumber" placeholder="A-214" required className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2.5 text-base" />
       </label>
       {error ? <p className="text-sm text-rust">{error}</p> : null}
       <button

@@ -33,11 +33,11 @@ export default async function BoardPage() {
         <h1 className="text-2xl font-semibold text-ink">Warden board</h1>
         <p className="mt-1 text-sm text-ink/55">Columns follow the status machine. Red SLA chips are already late.</p>
       </div>
-      <div className="grid gap-3 lg:grid-cols-5">
+      <div className="flex gap-3 overflow-x-auto pb-3 lg:grid lg:grid-cols-5 lg:overflow-visible">
         {COLUMNS.map((status) => {
           const column = tickets.filter((t) => t.status === status);
           return (
-            <section key={status} className="rounded-lg border border-line bg-panel/80 p-3">
+            <section key={status} className="w-72 shrink-0 rounded-lg border border-line bg-panel/80 p-3 lg:w-auto">
               <header className="mb-3 flex items-baseline justify-between">
                 <h2 className="text-xs uppercase tracking-[0.14em] text-ink/50">{STATUS_LABEL[status]}</h2>
                 <span className="font-mono text-xs text-ink/40">{column.length}</span>

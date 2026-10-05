@@ -22,7 +22,29 @@ export function PublicTicketTable({ tickets }: { tickets: PublicTicket[] }) {
   }
 
   return (
-    <div className="overflow-x-auto rounded-2xl bg-white">
+    <>
+    <ul className="space-y-3 md:hidden">
+      {tickets.map((ticket) => (
+        <li key={ticket.id} className="rounded-2xl bg-white px-4 py-4">
+          <p className="text-sm text-forest">{ticket.ref}</p>
+          <p className="mt-1 font-medium tracking-tight text-ink">{ticket.title}</p>
+          <p className="mt-1 text-base text-[#6e6e73]">
+            {CATEGORY_LABEL[ticket.category]} · {ticket.hostel.block} {ticket.roomNumber}
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <StatusBadge status={ticket.status} />
+            <PriorityBadge priority={ticket.priority} />
+            <SlaBadge
+              createdAt={ticket.createdAt}
+              priority={ticket.priority}
+              status={ticket.status}
+              events={ticket.events}
+            />
+          </div>
+        </li>
+      ))}
+    </ul>
+    <div className="hidden overflow-x-auto rounded-2xl bg-white md:block">
       <table className="w-full text-left text-base">
         <thead className="border-b border-black/5 text-sm font-normal text-[#6e6e73]">
           <tr>
@@ -62,5 +84,6 @@ export function PublicTicketTable({ tickets }: { tickets: PublicTicket[] }) {
         </tbody>
       </table>
     </div>
+    </>
   );
 }
