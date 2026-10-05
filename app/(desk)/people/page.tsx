@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { ROLE_LABEL } from "@/lib/labels";
+import { TRADE_LABEL } from "@/lib/trades";
 import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/session";
 
@@ -53,6 +54,7 @@ export default async function PeoplePage() {
             <tr>
               <th className="px-4 py-2">Name</th>
               <th className="px-4 py-2">Role</th>
+              <th className="px-4 py-2">Trade</th>
               <th className="px-4 py-2">Hostel</th>
               <th className="px-4 py-2">Room</th>
               <th className="px-4 py-2">Rating</th>
@@ -64,6 +66,7 @@ export default async function PeoplePage() {
               <tr key={person.id} className="border-b border-line/70">
                 <td className="px-4 py-3 font-medium">{person.name}</td>
                 <td className="px-4 py-3">{ROLE_LABEL[person.role]}</td>
+                <td className="px-4 py-3">{person.trade ? TRADE_LABEL[person.trade] : "—"}</td>
                 <td className="px-4 py-3">{person.hostel ? `${person.hostel.name} · ${person.hostel.block}` : "—"}</td>
                 <td className="px-4 py-3">{person.roomNumber ?? "—"}</td>
                 <td className="px-4 py-3">

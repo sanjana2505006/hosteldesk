@@ -1,13 +1,14 @@
 "use client";
 
-import { Priority, Role, TicketStatus } from "@prisma/client";
+import { Priority, Role, TicketStatus, Trade } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { PRIORITIES, PRIORITY_LABEL, STATUS_LABEL } from "@/lib/labels";
 import { SLA_HOURS } from "@/lib/sla";
 import { nextActions } from "@/lib/status";
+import { TRADE_LABEL } from "@/lib/trades";
 
-type Worker = { id: string; name: string; openJobs: number };
+type Worker = { id: string; name: string; openJobs: number; trade?: Trade | null };
 
 const CLOCK_STOPPED: TicketStatus[] = ["RESOLVED", "CLOSED", "REJECTED"];
 
@@ -130,7 +131,8 @@ export function TicketActions({
             <option value="">Unassigned</option>
             {workers.map((w) => (
               <option key={w.id} value={w.id}>
-                {w.name} · {w.openJobs} open
+                {w.name}
+                {w.trade ? ` · ${TRADE_LABEL[w.trade]}` : ""} · {w.openJobs} open
               </option>
             ))}
           </select>

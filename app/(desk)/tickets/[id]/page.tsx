@@ -54,7 +54,7 @@ export default async function TicketPage({ params }: { params: { id: string } })
           role: "WORKER",
           ...(user.role === "WARDEN" && user.hostelId ? { hostelId: user.hostelId } : {}),
         },
-        select: { id: true, name: true },
+        select: { id: true, name: true, trade: true },
         orderBy: { name: "asc" },
       })
     : [];
@@ -78,6 +78,7 @@ export default async function TicketPage({ params }: { params: { id: string } })
   const workers = workerRows.map((row) => ({
     id: row.id,
     name: row.name,
+    trade: row.trade,
     openJobs: openByWorker.get(row.id) ?? 0,
   }));
 

@@ -123,6 +123,14 @@ A ticket page lists the other complaints for that room and block. It uses the sa
 
 The assign menu shows how many tickets that worker still has open. Resolved, closed, and rejected jobs are left out. On the seeded desk Suresh is on the Wi-Fi and the fan, so he shows 2 open. Ramesh has the chair, so he shows 1.
 
+**Your own room**
+
+A student can only file for the room on their account. The field is locked on the form, and the server returns `400` if the body names a different room. Aarav lives in A-214. Sending B-108 does not open a ticket. A warden is not limited this way.
+
+**Right trade**
+
+Plumbing and nothing else goes to a plumber. Electrical and Wi-Fi go to an electrician. Carpentry and furniture go to a carpenter. Housekeeping and other can go to anyone. A warden who assigns Suresh (electrician) to **HD-1041** (the leak) gets `409`. An admin can still force that assignment. The people page shows each worker's trade.
+
 **No second ticket**
 
 The same room cannot have two open tickets in one category. Resolved, closed, and rejected ones do not block a new filing. Try plumbing for A-214 as the student: **HD-1041** is still open, so the form returns 409 and links to it.
@@ -199,6 +207,8 @@ Local photo uploads land in `public/uploads`. On Vercel that disk is ephemeral â
 - The assign menu shows how many open jobs a worker already has. A resolved ticket is not counted.
 - The notice board is Express and Mongo. The ticket desk is still Postgres. Next only forwards the post after checking the role.
 - Got it on a notice is stored on that Mongo document. Hitting it twice does not add my name again.
+- A student can only file for the room on their account. Another room is a 400.
+- A warden cannot assign an electrician to a plumbing ticket. That is a 409. An admin can.
 - The same room cannot get a second open ticket in the same category. That is a 409, with a link to the one already on file.
 - Docker is how another machine (or CI) gets the same Postgres.
 - GitHub Actions is how I know `main` still builds.

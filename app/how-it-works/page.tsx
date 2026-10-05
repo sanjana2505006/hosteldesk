@@ -15,7 +15,7 @@ export default function HowItWorksPage() {
           table below.
         </p>
 
-        <ol className="mt-6 list-decimal space-y-2 pl-5 text-sm leading-6 text-ink/80">
+        <ol className="mt-6 list-decimal space-y-2 pl-5 text-base leading-7 text-ink/80">
           <li>The student files it: title, room, category, priority. The same room cannot have two open tickets in one category.</li>
           <li>The warden assigns a worker and can raise or lower the priority while it is still open.</li>
           <li>The worker marks it in progress, waiting on parts, or resolved. Waiting on parts needs the part name, and that time does not count on the SLA clock.</li>
@@ -24,7 +24,7 @@ export default function HowItWorksPage() {
 
         <h2 className="mt-12 text-2xl font-semibold tracking-tight text-ink">Status moves</h2>
         <div className="mt-3 overflow-x-auto rounded-2xl bg-white">
-          <table className="w-full text-left text-sm">
+          <table className="w-full text-left text-base">
             <thead className="border-b border-line text-ink/55">
               <tr>
                 <th className="px-3 py-2 font-medium">From</th>
@@ -46,7 +46,7 @@ export default function HowItWorksPage() {
 
         <h2 className="mt-12 text-2xl font-semibold tracking-tight text-ink">How long before it is late</h2>
         <div className="mt-3 overflow-x-auto rounded-2xl bg-white">
-          <table className="w-full max-w-md text-left text-sm">
+          <table className="w-full max-w-md text-left text-base">
             <thead className="border-b border-line text-ink/55">
               <tr>
                 <th className="px-3 py-2 font-medium">Priority</th>

@@ -43,6 +43,19 @@ export async function POST(request: Request) {
   }
 
   const roomNumber = parsed.data.roomNumber.trim().toUpperCase();
+  if (user.role === "STUDENT") {
+    const mine = user.roomNumber?.trim().toUpperCase();
+    if (!mine) {
+      return NextResponse.json({ error: "Your account has no room on file." }, { status: 400 });
+    }
+    if (roomNumber !== mine) {
+      return NextResponse.json(
+        { error: `You live in ${mine}. File the complaint for that room.` },
+        { status: 400 },
+      );
+    }
+  }
+
   const alreadyOpen = await prisma.ticket.findFirst({
     where: {
       hostelId: user.hostelId,

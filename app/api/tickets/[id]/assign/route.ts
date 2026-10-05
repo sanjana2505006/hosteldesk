@@ -4,6 +4,7 @@ import { notifyParties } from "@/lib/notify";
 import { prisma } from "@/lib/prisma";
 import { assignSchema } from "@/lib/schemas";
 import { requireUser } from "@/lib/session";
+import { TRADE_LABEL, tradeNeeded } from "@/lib/trades";
 
 export const dynamic = "force-dynamic";
 
@@ -32,6 +33,14 @@ export async function POST(request: Request, { params }: Params) {
     const worker = await prisma.user.findUnique({ where: { id: parsed.data.assigneeId } });
     if (!worker || worker.role !== "WORKER") {
       return NextResponse.json({ error: "That account is not a worker." }, { status: 400 });
+    }
+    const needed = tradeNeeded(ticket.category);
+    if (user.role !== "ADMIN" && needed && worker.trade !== needed) {
+      const job = TRADE_LABEL[needed].toLowerCase();
+      const error = worker.trade
+        ? `${worker.name} is the ${TRADE_LABEL[worker.trade].toLowerCase()}. This job needs a ${job}.`
+        : `${worker.name} has no trade on file. This job needs a ${job}.`;
+      return NextResponse.json({ error }, { status: 409 });
     }
     assigneeName = worker.name;
   }

@@ -41,6 +41,12 @@ enum Category {
   OTHER
 }
 
+enum Trade {
+  PLUMBER
+  ELECTRICIAN
+  CARPENTER
+}
+
 model Hostel {
   id        String   @id @default(cuid())
   name      String
@@ -59,6 +65,7 @@ model User {
   role         Role     @default(STUDENT)
   phone        String?
   roomNumber   String?
+  trade        Trade?
   hostelId     String?
   hostel       Hostel?  @relation(fields: [hostelId], references: [id])
   createdAt    DateTime @default(now())

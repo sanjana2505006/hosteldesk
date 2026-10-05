@@ -20,17 +20,17 @@ export default async function DeskLayout({ children }: { children: React.ReactNo
     <div className="min-h-screen">
       <header className="frost sticky top-0 z-20 border-b border-black/10">
         <div className="mx-auto flex min-h-12 max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-5 py-2">
-          <Link href="/inbox" className="text-[15px] font-semibold tracking-tight text-ink">
+          <Link href="/inbox" className="text-lg font-semibold tracking-tight text-ink">
             HostelDesk
           </Link>
-          <nav className="flex flex-wrap items-center gap-x-5 gap-y-1 text-[12px] text-ink/80">
+          <nav className="flex flex-wrap items-center gap-x-5 gap-y-1 text-base text-ink/80">
             <Link href="/inbox" className="transition-colors duration-200 hover:text-ink">
               Inbox
             </Link>
             <Link href="/alerts" className="transition-colors duration-200 hover:text-ink">
               Alerts
               {unread ? (
-                <span className="ml-1 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-rust px-1 text-[10px] text-white">
+                <span className="ml-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-rust px-1.5 text-xs text-white">
                   {unread}
                 </span>
               ) : null}

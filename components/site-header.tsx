@@ -14,11 +14,11 @@ export function SiteHeader() {
 
   return (
     <header className="frost sticky top-0 z-20 border-b border-black/10">
-      <div className="mx-auto flex h-12 max-w-5xl items-center justify-between gap-4 px-5">
-        <Link href="/" className="text-[15px] font-semibold tracking-tight text-ink">
+      <div className="mx-auto flex h-14 max-w-5xl items-center justify-between gap-4 px-5">
+        <Link href="/" className="text-lg font-semibold tracking-tight text-ink">
           HostelDesk
         </Link>
-        <nav className="flex items-center gap-5 text-[12px] text-ink/80">
+        <nav className="flex items-center gap-5 text-base text-ink/80">
           {links.map((link) => (
             <Link
               key={link.href}

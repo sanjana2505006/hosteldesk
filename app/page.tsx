@@ -60,15 +60,15 @@ export default async function HomePage() {
 
         <div className="mt-12 grid gap-px overflow-hidden rounded-2xl bg-line sm:grid-cols-3">
           <div className="bg-white px-6 py-5">
-            <p className="text-[12px] text-[#6e6e73]">Open</p>
+            <p className="text-base text-[#6e6e73]">Open</p>
             <p className="mt-1 text-4xl font-semibold tracking-tight">{open}</p>
           </div>
           <div className="bg-white px-6 py-5">
-            <p className="text-[12px] text-[#6e6e73]">Late</p>
+            <p className="text-base text-[#6e6e73]">Late</p>
             <p className="mt-1 text-4xl font-semibold tracking-tight text-rust">{late}</p>
           </div>
           <div className="bg-white px-6 py-5">
-            <p className="text-[12px] text-[#6e6e73]">Resolved or closed</p>
+            <p className="text-base text-[#6e6e73]">Resolved or closed</p>
             <p className="mt-1 text-4xl font-semibold tracking-tight">{closed}</p>
           </div>
         </div>
@@ -91,7 +91,7 @@ export default async function HomePage() {
           </Link>
         </p>
         <div className="mt-4 overflow-x-auto rounded-2xl bg-white">
-          <table className="w-full text-left text-sm">
+          <table className="w-full text-left text-base">
             <thead className="border-b border-line text-ink/55">
               <tr>
                 <th className="px-3 py-2 font-medium">Role</th>

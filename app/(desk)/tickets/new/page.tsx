@@ -16,7 +16,7 @@ export default async function NewTicketPage() {
         Be specific — room, what’s failing, and how long. The SLA clock starts the moment you submit. If this room already has that category open, this form will not open a second ticket.
       </p>
       <div className="mt-8 rounded-lg border border-line bg-panel p-6 shadow-desk">
-        <TicketForm defaultRoom={user.roomNumber} />
+        <TicketForm defaultRoom={user.roomNumber} lockRoom={user.role === "STUDENT"} />
       </div>
     </div>
   );

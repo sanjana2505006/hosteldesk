@@ -8,6 +8,7 @@
 }
 
 html {
+  font-size: 18px;
   scroll-behavior: smooth;
 }
 
@@ -34,6 +35,6 @@ h1 {
 
 @layer components {
   .stamp {
-    @apply inline-flex items-center rounded-full border-0 px-2.5 py-0.5 text-[12px] font-medium;
+    @apply inline-flex items-center rounded-full border-0 px-2.5 py-0.5 text-sm font-medium;
   }
 }

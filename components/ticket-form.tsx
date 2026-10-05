@@ -5,7 +5,13 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { CATEGORIES, CATEGORY_LABEL, PRIORITIES, PRIORITY_LABEL } from "@/lib/labels";
 
-export function TicketForm({ defaultRoom }: { defaultRoom?: string | null }) {
+export function TicketForm({
+  defaultRoom,
+  lockRoom,
+}: {
+  defaultRoom?: string | null;
+  lockRoom?: boolean;
+}) {
   const router = useRouter();
   const [error, setError] = useState("");
   const [existingId, setExistingId] = useState("");
@@ -84,7 +90,14 @@ export function TicketForm({ defaultRoom }: { defaultRoom?: string | null }) {
         </label>
         <label className="block text-sm">
           Room
-          <input name="roomNumber" defaultValue={defaultRoom ?? ""} required className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2" />
+          <input
+            name="roomNumber"
+            defaultValue={defaultRoom ?? ""}
+            readOnly={lockRoom}
+            required
+            className={`mt-1 w-full rounded-md border border-line px-3 py-2 ${lockRoom ? "bg-black/5 text-ink/70" : "bg-white"}`}
+          />
+          {lockRoom ? <span className="mt-1 block text-ink/50">Only your own room.</span> : null}
         </label>
       </div>
       <label className="block text-sm">

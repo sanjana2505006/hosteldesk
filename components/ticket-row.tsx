@@ -17,10 +17,10 @@ export function TicketRow({ ticket }: { ticket: Row }) {
       href={`/tickets/${ticket.id}`}
       className="grid grid-cols-1 gap-3 border-b border-line px-4 py-4 transition hover:bg-[#fbf6ec] md:grid-cols-[88px_1fr_140px_120px_140px] md:items-center"
     >
-      <p className="font-mono text-xs text-forest">{ticket.ref}</p>
+      <p className="font-mono text-sm text-forest">{ticket.ref}</p>
       <div>
         <p className="font-medium text-ink">{ticket.title}</p>
-        <p className="mt-1 text-xs text-ink/55">
+        <p className="mt-1 text-sm text-ink/55">
           {CATEGORY_LABEL[ticket.category]} · {ticket.hostel.block} {ticket.roomNumber} ·{" "}
           {ticket.reporter.name}
         </p>
@@ -34,7 +34,7 @@ export function TicketRow({ ticket }: { ticket: Row }) {
           status={ticket.status}
           events={ticket.events}
         />
-        <span className="text-[11px] text-ink/40">{formatDate(ticket.createdAt)}</span>
+        <span className="text-sm text-ink/40">{formatDate(ticket.createdAt)}</span>
       </div>
     </Link>
   );
