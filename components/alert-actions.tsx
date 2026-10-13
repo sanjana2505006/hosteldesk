@@ -41,7 +41,7 @@ export function MarkAlertsRead() {
       type="button"
       onClick={onClick}
       disabled={pending}
-      className="rounded-md border border-line bg-white px-3 py-1.5 text-sm text-ink/70 hover:bg-[#fbf6ec]"
+      className="rounded-md border border-line bg-paper px-3 py-1.5 text-sm text-ink/70 hover:bg-ink/5"
     >
       {pending ? "Clearing…" : "Mark all read"}
     </button>

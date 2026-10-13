@@ -38,8 +38,8 @@ export default async function AlertsPage() {
             <Link
               key={alert.id}
               href={`/tickets/${alert.ticket.id}`}
-              className={`block border-b border-line px-4 py-4 hover:bg-[#fbf6ec] ${
-                alert.readAt ? "" : "bg-[#fbf6ec]"
+              className={`block border-b border-line px-4 py-4 hover:bg-ink/5 ${
+                alert.readAt ? "" : "bg-ink/5"
               }`}
             >
               <p className="font-mono text-xs text-forest">{alert.ticket.ref}</p>

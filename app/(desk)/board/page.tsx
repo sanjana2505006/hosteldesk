@@ -49,7 +49,7 @@ export default async function BoardPage() {
                     <Link
                       key={ticket.id}
                       href={`/tickets/${ticket.id}`}
-                      className={`block rounded-md border bg-white p-3 ${late ? "border-rust/50" : "border-line"}`}
+                      className={`block rounded-md border bg-paper p-3 ${late ? "border-rust/50" : "border-line"}`}
                     >
                       <p className="font-mono text-[10px] text-forest">{ticket.ref}</p>
                       <p className="mt-1 text-sm font-medium leading-snug">{ticket.title}</p>

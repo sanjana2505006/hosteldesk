@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,10 +10,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#1d1d1f",
-        paper: "#ffffff",
-        panel: "#ffffff",
-        line: "#d2d2d7",
+        ink: "rgb(var(--ink) / <alpha-value>)",
+        paper: "rgb(var(--paper) / <alpha-value>)",
+        panel: "rgb(var(--panel) / <alpha-value>)",
+        line: "rgb(var(--line) / <alpha-value>)",
         forest: {
           DEFAULT: "#0071e3",
           600: "#0077ed",
@@ -35,7 +36,7 @@ const config: Config = {
         mono: ["var(--font-geist-mono)", "ui-monospace", "monospace"],
       },
       boxShadow: {
-        desk: "0 12px 40px -24px rgba(0, 0, 0, 0.18)",
+        desk: "var(--shadow)",
       },
     },
   },

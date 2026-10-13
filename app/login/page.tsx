@@ -9,8 +9,8 @@ export default function LoginPage() {
       <SiteHeader />
       <div className="mx-auto flex max-w-md flex-col px-6 pb-16 pt-16">
         <h1 className="text-4xl font-semibold text-ink">Sign in.</h1>
-        <p className="mt-3 text-[17px] text-[#6e6e73]">Use a demo chip or your own student account.</p>
-        <div className="mt-8 rounded-2xl bg-white p-6 shadow-desk">
+        <p className="mt-3 text-[17px] text-ink/60">Use a demo chip or your own student account.</p>
+        <div className="mt-8 rounded-2xl bg-paper p-6 shadow-desk">
           <Suspense>
             <LoginForm />
           </Suspense>

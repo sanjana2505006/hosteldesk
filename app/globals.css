@@ -5,6 +5,25 @@
 :root {
   --background: #f5f5f7;
   --foreground: #1d1d1f;
+  --ink: 29 29 31;
+  --paper: 255 255 255;
+  --panel: 255 255 255;
+  --line: 210 210 215;
+  --frost: rgba(251, 251, 253, 0.86);
+  --shadow: 0 12px 40px -24px rgba(0, 0, 0, 0.18);
+  color-scheme: light;
+}
+
+.dark {
+  --background: #1d1d1f;
+  --foreground: #f5f5f7;
+  --ink: 245 245 247;
+  --paper: 44 44 46;
+  --panel: 44 44 46;
+  --line: 66 66 69;
+  --frost: rgba(29, 29, 31, 0.92);
+  --shadow: 0 12px 40px -24px rgba(0, 0, 0, 0.7);
+  color-scheme: dark;
 }
 
 html {
@@ -28,7 +47,7 @@ h1 {
 }
 
 .frost {
-  background: rgba(251, 251, 253, 0.8);
+  background: var(--frost);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   backdrop-filter: saturate(180%) blur(20px);
 }

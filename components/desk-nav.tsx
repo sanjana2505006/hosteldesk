@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SignOutButton } from "@/components/sign-out-button";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export type DeskLink = { href: string; label: string; badge?: number };
 
@@ -25,7 +26,7 @@ export function DeskNav({
 
   return (
     <>
-      <header className="frost sticky top-0 z-20 border-b border-black/10">
+      <header className="frost sticky top-0 z-20 border-b border-line">
         <div className="mx-auto flex min-h-14 max-w-6xl items-center justify-between gap-3 px-4 py-2 sm:px-5">
           <Link href="/inbox" className="text-lg font-semibold tracking-tight text-ink">
             HostelDesk
@@ -48,15 +49,17 @@ export function DeskNav({
             <span className="text-ink/40">
               {name} · {roleLabel}
             </span>
+            <ThemeToggle />
             <SignOutButton />
           </nav>
           <div className="flex items-center gap-3 md:hidden">
             <span className="max-w-[8rem] truncate text-sm text-ink/50">{name}</span>
+            <ThemeToggle />
             <SignOutButton />
           </div>
         </div>
       </header>
-      <nav className={`frost fixed inset-x-0 bottom-0 z-30 grid border-t border-black/10 ${columns} md:hidden`}>
+      <nav className={`frost fixed inset-x-0 bottom-0 z-30 grid border-t border-line ${columns} md:hidden`}>
         {links.map((link) => {
           const current = isCurrent(path, link.href);
           return (

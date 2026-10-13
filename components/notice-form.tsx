@@ -36,7 +36,7 @@ export function NoticeForm() {
         required
         minLength={4}
         placeholder="Water off on Sunday morning"
-        className="w-full rounded-md border border-line bg-white px-3 py-2 text-sm"
+        className="w-full rounded-md border border-line bg-paper px-3 py-2 text-sm"
       />
       <textarea
         value={body}
@@ -45,10 +45,10 @@ export function NoticeForm() {
         minLength={8}
         rows={3}
         placeholder="Who it affects, and until when."
-        className="w-full rounded-md border border-line bg-white px-3 py-2 text-sm"
+        className="w-full rounded-md border border-line bg-paper px-3 py-2 text-sm"
       />
       {error ? <p className="text-sm text-rust">{error}</p> : null}
-      <button className="rounded-md bg-forest px-3 py-2 text-sm text-paper">Post notice</button>
+      <button className="rounded-md bg-forest px-3 py-2 text-sm text-white">Post notice</button>
     </form>
   );
 }

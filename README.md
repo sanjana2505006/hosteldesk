@@ -27,7 +27,7 @@ npm run db:seed
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
+Open [http://localhost:3000](http://localhost:3000). **Dark** in the header switches the desk. The choice stays in this browser.
 
 | Role    | Email                     | Password    |
 | ------- | ------------------------- | ----------- |

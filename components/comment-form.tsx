@@ -33,10 +33,10 @@ export function CommentForm({ ticketId }: { ticketId: string }) {
         required
         rows={3}
         placeholder="Add an update the other side will see…"
-        className="w-full rounded-md border border-line bg-white px-3 py-2 text-sm"
+        className="w-full rounded-md border border-line bg-paper px-3 py-2 text-sm"
       />
       {error ? <p className="text-sm text-rust">{error}</p> : null}
-      <button className="rounded-md bg-forest px-3 py-2 text-sm text-paper">Post update</button>
+      <button className="rounded-md bg-forest px-3 py-2 text-sm text-white">Post update</button>
     </form>
   );
 }

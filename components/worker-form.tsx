@@ -40,19 +40,19 @@ export function WorkerForm({ hostels }: { hostels?: Hostel[] }) {
     <form onSubmit={onSubmit} className="grid gap-3 sm:grid-cols-2">
       <label className="block text-sm">
         Name
-        <input name="name" required minLength={2} className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2.5 text-base" />
+        <input name="name" required minLength={2} className="mt-1 w-full rounded-md border border-line bg-paper px-3 py-2.5 text-base" />
       </label>
       <label className="block text-sm">
         Email
-        <input name="email" type="email" required className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2.5 text-base" />
+        <input name="email" type="email" required className="mt-1 w-full rounded-md border border-line bg-paper px-3 py-2.5 text-base" />
       </label>
       <label className="block text-sm">
         Password
-        <input name="password" type="password" required minLength={6} className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2.5 text-base" />
+        <input name="password" type="password" required minLength={6} className="mt-1 w-full rounded-md border border-line bg-paper px-3 py-2.5 text-base" />
       </label>
       <label className="block text-sm">
         Trade
-        <select name="trade" required className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2.5 text-base">
+        <select name="trade" required className="mt-1 w-full rounded-md border border-line bg-paper px-3 py-2.5 text-base">
           {TRADES.map((trade) => (
             <option key={trade} value={trade}>
               {TRADE_LABEL[trade]}
@@ -63,7 +63,7 @@ export function WorkerForm({ hostels }: { hostels?: Hostel[] }) {
       {pickHostel ? (
         <label className="block text-sm sm:col-span-2">
           Hostel
-          <select name="hostelId" required className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2.5 text-base">
+          <select name="hostelId" required className="mt-1 w-full rounded-md border border-line bg-paper px-3 py-2.5 text-base">
             {hostels!.map((hostel) => (
               <option key={hostel.id} value={hostel.id}>
                 {hostel.name} · {hostel.block}

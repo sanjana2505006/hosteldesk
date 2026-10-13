@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const links = [
   { href: "/", label: "Home" },
@@ -19,7 +20,7 @@ export function SiteHeader() {
   }, [path]);
 
   return (
-    <header className="frost sticky top-0 z-20 border-b border-black/10">
+    <header className="frost sticky top-0 z-20 border-b border-line">
       <div className="mx-auto flex h-14 max-w-5xl items-center justify-between gap-3 px-4 sm:px-5">
         <Link href="/" className="text-lg font-semibold tracking-tight text-ink">
           HostelDesk
@@ -34,6 +35,7 @@ export function SiteHeader() {
               {link.label}
             </Link>
           ))}
+          <ThemeToggle />
           <Link href="/login" className="transition-colors duration-200 hover:text-ink">
             Login
           </Link>
@@ -45,6 +47,7 @@ export function SiteHeader() {
           </Link>
         </nav>
         <div className="flex items-center gap-3 sm:hidden">
+          <ThemeToggle />
           <Link href="/register" className="rounded-full bg-forest px-3 py-1 text-white">
             Register
           </Link>
@@ -59,7 +62,7 @@ export function SiteHeader() {
         </div>
       </div>
       {open ? (
-        <nav className="space-y-1 border-t border-black/10 px-4 py-3 sm:hidden">
+        <nav className="space-y-1 border-t border-line px-4 py-3 sm:hidden">
           {links.map((link) => (
             <Link key={link.href} href={link.href} className="block py-2 text-base text-ink">
               {link.label}

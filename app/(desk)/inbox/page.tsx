@@ -87,7 +87,7 @@ export default async function InboxPage({ searchParams }: { searchParams: Search
             name="q"
             defaultValue={q}
             placeholder="Room, ref, or title"
-            className="mt-1 block w-full rounded-md border border-line bg-white px-3 py-2.5 text-base"
+            className="mt-1 block w-full rounded-md border border-line bg-paper px-3 py-2.5 text-base"
           />
         </label>
         <label className="text-sm">
@@ -95,7 +95,7 @@ export default async function InboxPage({ searchParams }: { searchParams: Search
           <select
             name="status"
             defaultValue={status ?? ""}
-            className="mt-1 block w-full rounded-md border border-line bg-white px-3 py-2.5 text-base sm:w-auto"
+            className="mt-1 block w-full rounded-md border border-line bg-paper px-3 py-2.5 text-base sm:w-auto"
           >
             <option value="">Any</option>
             {STATUSES.map((item) => (
@@ -110,7 +110,7 @@ export default async function InboxPage({ searchParams }: { searchParams: Search
           <select
             name="category"
             defaultValue={category ?? ""}
-            className="mt-1 block w-full rounded-md border border-line bg-white px-3 py-2.5 text-base sm:w-auto"
+            className="mt-1 block w-full rounded-md border border-line bg-paper px-3 py-2.5 text-base sm:w-auto"
           >
             <option value="">Any</option>
             {CATEGORIES.map((item) => (

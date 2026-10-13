@@ -4,12 +4,12 @@ import { slaLabel, type SlaMark } from "@/lib/sla";
 import { cn } from "@/lib/utils";
 
 const statusClass: Record<TicketStatus, string> = {
-  OPEN: "bg-black/5 text-ink",
+  OPEN: "bg-ink/10 text-ink",
   ASSIGNED: "bg-[#e8f2fc] text-forest",
   IN_PROGRESS: "bg-[#fff4e5] text-[#c93400]",
   WAITING_PARTS: "bg-[#fff4e5] text-[#c93400]",
   RESOLVED: "bg-[#e8f8ee] text-[#248a3d]",
-  CLOSED: "bg-black/[0.04] text-ink/45",
+  CLOSED: "bg-ink/10 text-ink/45",
   REJECTED: "bg-[#ffe8e6] text-rust",
 };
 
@@ -17,7 +17,7 @@ const slaClass = {
   breach: "bg-[#ffe8e6] text-rust",
   risk: "bg-[#fff4e5] text-[#c93400]",
   ok: "bg-[#e8f8ee] text-[#248a3d]",
-  done: "bg-black/[0.04] text-ink/45",
+  done: "bg-ink/10 text-ink/45",
 };
 
 export function StatusBadge({ status }: { status: TicketStatus }) {
@@ -30,7 +30,7 @@ export function PriorityBadge({ priority }: { priority: Priority }) {
       ? "bg-[#ffe8e6] text-rust"
       : priority === "MEDIUM"
         ? "bg-[#fff4e5] text-[#c93400]"
-        : "bg-black/5 text-ink/70";
+        : "bg-ink/10 text-ink/70";
   return <span className={cn("stamp", tone)}>{PRIORITY_LABEL[priority]}</span>;
 }
 

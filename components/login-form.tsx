@@ -58,7 +58,7 @@ export function LoginForm() {
         <label className="block text-sm">
           Email
           <input
-            className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2.5 text-base outline-none ring-forest/20 focus:ring-2"
+            className="mt-1 w-full rounded-md border border-line bg-paper px-3 py-2.5 text-base outline-none ring-forest/20 focus:ring-2"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -68,7 +68,7 @@ export function LoginForm() {
         <label className="block text-sm">
           Password
           <input
-            className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2.5 text-base outline-none ring-forest/20 focus:ring-2"
+            className="mt-1 w-full rounded-md border border-line bg-paper px-3 py-2.5 text-base outline-none ring-forest/20 focus:ring-2"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

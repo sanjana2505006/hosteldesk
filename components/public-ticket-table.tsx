@@ -25,10 +25,10 @@ export function PublicTicketTable({ tickets }: { tickets: PublicTicket[] }) {
     <>
     <ul className="space-y-3 md:hidden">
       {tickets.map((ticket) => (
-        <li key={ticket.id} className="rounded-2xl bg-white px-4 py-4">
+        <li key={ticket.id} className="rounded-2xl bg-paper px-4 py-4">
           <p className="text-sm text-forest">{ticket.ref}</p>
           <p className="mt-1 font-medium tracking-tight text-ink">{ticket.title}</p>
-          <p className="mt-1 text-base text-[#6e6e73]">
+          <p className="mt-1 text-base text-ink/60">
             {CATEGORY_LABEL[ticket.category]} · {ticket.hostel.block} {ticket.roomNumber}
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
@@ -44,9 +44,9 @@ export function PublicTicketTable({ tickets }: { tickets: PublicTicket[] }) {
         </li>
       ))}
     </ul>
-    <div className="hidden overflow-x-auto rounded-2xl bg-white md:block">
+    <div className="hidden overflow-x-auto rounded-2xl bg-paper md:block">
       <table className="w-full text-left text-base">
-        <thead className="border-b border-black/5 text-sm font-normal text-[#6e6e73]">
+        <thead className="border-b border-line text-sm font-normal text-ink/60">
           <tr>
             <th className="px-5 py-3 font-normal">Ref</th>
             <th className="px-5 py-3 font-normal">Complaint</th>
@@ -57,11 +57,11 @@ export function PublicTicketTable({ tickets }: { tickets: PublicTicket[] }) {
         </thead>
         <tbody>
           {tickets.map((ticket) => (
-            <tr key={ticket.id} className="border-b border-black/5 last:border-0">
+            <tr key={ticket.id} className="border-b border-line last:border-0">
               <td className="px-5 py-4 text-forest">{ticket.ref}</td>
               <td className="px-5 py-4">
                 <p className="font-medium tracking-tight text-ink">{ticket.title}</p>
-                <p className="mt-0.5 text-base text-[#6e6e73]">
+                <p className="mt-0.5 text-base text-ink/60">
                   {CATEGORY_LABEL[ticket.category]} · {ticket.hostel.block} {ticket.roomNumber}
                 </p>
               </td>

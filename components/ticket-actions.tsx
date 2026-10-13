@@ -110,7 +110,7 @@ export function TicketActions({
           <select
             defaultValue={priority}
             onChange={(e) => changePriority(e.target.value, e.target)}
-            className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2"
+            className="mt-1 w-full rounded-md border border-line bg-paper px-3 py-2"
           >
             {PRIORITIES.map((level) => (
               <option key={level} value={level}>
@@ -126,7 +126,7 @@ export function TicketActions({
           <select
             defaultValue={assigneeId ?? ""}
             onChange={(e) => assign(e.target.value || null)}
-            className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2"
+            className="mt-1 w-full rounded-md border border-line bg-paper px-3 py-2"
           >
             <option value="">Unassigned</option>
             {workers.map((w) => (
@@ -144,7 +144,7 @@ export function TicketActions({
           <select
             value={rating}
             onChange={(e) => setRating(e.target.value)}
-            className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2"
+            className="mt-1 w-full rounded-md border border-line bg-paper px-3 py-2"
           >
             <option value="">Pick 1 to 5</option>
             <option value="5">5 — sorted</option>
@@ -161,7 +161,7 @@ export function TicketActions({
           <input
             value={note}
             onChange={(e) => setNote(e.target.value)}
-            className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2"
+            className="mt-1 w-full rounded-md border border-line bg-paper px-3 py-2"
             placeholder={
               needsPart ? "Capacitor for the fan, ordered" : needsRating ? "Tap still drips a little…" : "Visited the room"
             }
