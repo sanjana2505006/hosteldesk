@@ -15,14 +15,14 @@
 }
 
 .dark {
-  --background: #1d1d1f;
-  --foreground: #f5f5f7;
-  --ink: 245 245 247;
-  --paper: 44 44 46;
-  --panel: 44 44 46;
-  --line: 66 66 69;
-  --frost: rgba(29, 29, 31, 0.92);
-  --shadow: 0 12px 40px -24px rgba(0, 0, 0, 0.7);
+  --background: #2c2c30;
+  --foreground: #d6d6dc;
+  --ink: 214 214 220;
+  --paper: 54 54 58;
+  --panel: 54 54 58;
+  --line: 92 92 98;
+  --frost: rgba(44, 44, 48, 0.92);
+  --shadow: 0 12px 40px -24px rgba(0, 0, 0, 0.45);
   color-scheme: dark;
 }
 
