@@ -42,6 +42,22 @@ export async function POST(request: Request, { params }: Params) {
         : `${worker.name} has no trade on file. This job needs a ${job}.`;
       return NextResponse.json({ error }, { status: 409 });
     }
+    // Same count the assign menu shows. Admin can go past it.
+    if (user.role !== "ADMIN") {
+      const open = await prisma.ticket.count({
+        where: {
+          assigneeId: worker.id,
+          id: { not: ticket.id },
+          status: { notIn: ["RESOLVED", "CLOSED", "REJECTED"] },
+        },
+      });
+      if (open >= 3) {
+        return NextResponse.json(
+          { error: `${worker.name} already has ${open} open jobs.` },
+          { status: 409 },
+        );
+      }
+    }
     assigneeName = worker.name;
   }
 

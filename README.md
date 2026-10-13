@@ -123,6 +123,10 @@ A ticket page lists the other complaints for that room and block. It uses the sa
 
 The assign menu shows how many tickets that worker still has open. Resolved, closed, and rejected jobs are left out. On the seeded desk Suresh is on the Wi-Fi and the fan, so he shows 2 open. Ramesh has the chair, so he shows 1.
 
+**Three open jobs**
+
+A worker can hold 3 of those. A warden who assigns a fourth gets `409`. An admin can still assign past that. Ramesh starts with the chair only. File two housekeeping tickets for two different rooms (anyone can take those), assign both to him, then assign the leak **HD-1041**. It comes back as "Ramesh Kumar already has 3 open jobs." The drain **HD-1045** is resolved, so it does not count.
+
 **Your own room**
 
 A student can only file for the room on their account. The field is locked on the form, and the server returns `400` if the body names a different room. Aarav lives in A-214. Sending B-108 does not open a ticket. A warden is not limited this way.
@@ -209,6 +213,7 @@ Local photo uploads land in `public/uploads`. On Vercel that disk is ephemeral â
 - Inbox filters narrow the list. The SLA count above them is still the whole queue. Waiting on parts is not counted in that clock.
 - The ticket page lists the other complaints for that room. A student still only sees their own.
 - The assign menu shows how many open jobs a worker already has. A resolved ticket is not counted.
+- A worker can hold 3 open jobs. A fourth assign is a 409 for a warden. An admin can still do it.
 - The notice board is Express and Mongo. The ticket desk is still Postgres. Next only forwards the post after checking the role.
 - Got it on a notice is stored on that Mongo document. Hitting it twice does not add my name again.
 - A student can only file for the room on their account. Another room is a 400.
