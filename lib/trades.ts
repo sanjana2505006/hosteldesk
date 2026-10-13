@@ -1,5 +1,7 @@
 import { Category, Trade } from "@prisma/client";
 
+export const TRADES: Trade[] = ["PLUMBER", "ELECTRICIAN", "CARPENTER"];
+
 export const TRADE_LABEL: Record<Trade, string> = {
   PLUMBER: "Plumber",
   ELECTRICIAN: "Electrician",

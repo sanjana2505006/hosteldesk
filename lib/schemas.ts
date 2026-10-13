@@ -1,5 +1,13 @@
 import { z } from "zod";
 
+export const workerSchema = z.object({
+  name: z.string().min(2).max(60),
+  email: z.string().email(),
+  password: z.string().min(6).max(72),
+  trade: z.enum(["PLUMBER", "ELECTRICIAN", "CARPENTER"]),
+  hostelId: z.string().min(1).optional(),
+});
+
 export const registerSchema = z.object({
   name: z.string().min(2).max(60),
   email: z.string().email(),

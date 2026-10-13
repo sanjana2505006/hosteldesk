@@ -131,6 +131,10 @@ A student can only file for the room on their account. The field is locked on th
 
 Plumbing and nothing else goes to a plumber. Electrical and Wi-Fi go to an electrician. Carpentry and furniture go to a carpenter. Housekeeping and other can go to anyone. A warden who assigns Suresh (electrician) to **HD-1041** (the leak) gets `409`. An admin can still force that assignment. The people page shows each worker's trade.
 
+**Add a worker**
+
+A warden adds a plumber, electrician, or carpenter from the people page. That account is tied to the warden's block and shows up in the assign menu. A student who posts the same request gets `403`. An email that is already on the desk gets `409`. An admin picks the block.
+
 **No second ticket**
 
 The same room cannot have two open tickets in one category. Resolved, closed, and rejected ones do not block a new filing. Try plumbing for A-214 as the student: **HD-1041** is still open, so the form returns 409 and links to it.
@@ -209,6 +213,7 @@ Local photo uploads land in `public/uploads`. On Vercel that disk is ephemeral â
 - Got it on a notice is stored on that Mongo document. Hitting it twice does not add my name again.
 - A student can only file for the room on their account. Another room is a 400.
 - A warden cannot assign an electrician to a plumbing ticket. That is a 409. An admin can.
+- A warden can add a worker from the people page. The account is on that block, with a trade. A student gets a 403.
 - The same room cannot get a second open ticket in the same category. That is a 409, with a link to the one already on file.
 - Docker is how another machine (or CI) gets the same Postgres.
 - GitHub Actions is how I know `main` still builds.

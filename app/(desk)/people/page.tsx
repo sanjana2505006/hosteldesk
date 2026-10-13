@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { WorkerForm } from "@/components/worker-form";
 import { ROLE_LABEL } from "@/lib/labels";
 import { TRADE_LABEL } from "@/lib/trades";
 import { prisma } from "@/lib/prisma";
@@ -16,6 +17,9 @@ export default async function PeoplePage() {
   const user = await requireUser();
   if (!user) redirect("/login");
   if (user.role !== "WARDEN" && user.role !== "ADMIN") redirect("/inbox");
+
+  const hostels =
+    user.role === "ADMIN" ? await prisma.hostel.findMany({ orderBy: { block: "asc" } }) : [];
 
   const people = await prisma.user.findMany({
     where: user.role === "WARDEN" && user.hostelId ? { hostelId: user.hostelId } : {},
@@ -47,6 +51,17 @@ export default async function PeoplePage() {
         <p className="mt-1 text-sm text-ink/55">
           Students, workers and staff attached to this desk. Worker ratings come from tickets a student closed.
         </p>
+      </div>
+      <div className="max-w-2xl rounded-lg border border-line bg-panel p-4 shadow-desk">
+        <h2 className="text-lg font-semibold text-ink">Add a worker</h2>
+        <p className="mt-1 text-sm text-ink/55">
+          {user.role === "WARDEN"
+            ? "They join your block and show up in the assign menu."
+            : "Pick the block. They show up in that warden's assign menu."}
+        </p>
+        <div className="mt-4">
+          <WorkerForm hostels={hostels} />
+        </div>
       </div>
       <div className="overflow-x-auto rounded-lg border border-line bg-panel shadow-desk">
         <table className="w-full min-w-[720px] text-left text-sm">
