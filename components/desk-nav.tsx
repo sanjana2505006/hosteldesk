@@ -31,31 +31,32 @@ export function DeskNav({
           <Link href="/inbox" className="text-lg font-semibold tracking-tight text-ink">
             HostelDesk
           </Link>
-          <nav className="hidden items-center gap-x-5 gap-y-1 text-base text-ink/80 md:flex">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`transition-colors duration-200 hover:text-ink ${isCurrent(path, link.href) ? "text-ink" : ""}`}
-              >
-                {link.label}
-                {link.badge ? (
-                  <span className="ml-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-rust px-1.5 text-xs text-white">
-                    {link.badge}
-                  </span>
-                ) : null}
-              </Link>
-            ))}
-            <span className="text-ink/40">
-              {name} · {roleLabel}
-            </span>
+          <div className="flex items-center gap-4">
+            <nav className="hidden items-center gap-x-5 gap-y-1 text-base text-ink/80 md:flex">
+              {links.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`transition-colors duration-200 hover:text-ink ${isCurrent(path, link.href) ? "text-ink" : ""}`}
+                >
+                  {link.label}
+                  {link.badge ? (
+                    <span className="ml-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-rust px-1.5 text-xs text-white">
+                      {link.badge}
+                    </span>
+                  ) : null}
+                </Link>
+              ))}
+              <span className="text-ink/40">
+                {name} · {roleLabel}
+              </span>
+              <SignOutButton />
+            </nav>
+            <div className="flex items-center gap-3 md:hidden">
+              <span className="max-w-[8rem] truncate text-sm text-ink/50">{name}</span>
+              <SignOutButton />
+            </div>
             <ThemeToggle />
-            <SignOutButton />
-          </nav>
-          <div className="flex items-center gap-3 md:hidden">
-            <span className="max-w-[8rem] truncate text-sm text-ink/50">{name}</span>
-            <ThemeToggle />
-            <SignOutButton />
           </div>
         </div>
       </header>

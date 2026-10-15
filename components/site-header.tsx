@@ -25,40 +25,41 @@ export function SiteHeader() {
         <Link href="/" className="text-lg font-semibold tracking-tight text-ink">
           HostelDesk
         </Link>
-        <nav className="hidden items-center gap-5 text-base text-ink/80 sm:flex">
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`transition-colors duration-200 hover:text-ink ${path === link.href ? "text-ink" : ""}`}
-            >
-              {link.label}
+        <div className="flex items-center gap-4">
+          <nav className="hidden items-center gap-5 text-base text-ink/80 sm:flex">
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`transition-colors duration-200 hover:text-ink ${path === link.href ? "text-ink" : ""}`}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <Link href="/login" className="transition-colors duration-200 hover:text-ink">
+              Login
             </Link>
-          ))}
+            <Link
+              href="/register"
+              className="rounded-full bg-forest px-3 py-1 text-white transition-colors duration-200 hover:bg-forest-600"
+            >
+              Register
+            </Link>
+          </nav>
+          <div className="flex items-center gap-3 sm:hidden">
+            <Link href="/register" className="rounded-full bg-forest px-3 py-1 text-white">
+              Register
+            </Link>
+            <button
+              type="button"
+              aria-expanded={open}
+              onClick={() => setOpen((value) => !value)}
+              className="text-base text-ink"
+            >
+              {open ? "Close" : "Menu"}
+            </button>
+          </div>
           <ThemeToggle />
-          <Link href="/login" className="transition-colors duration-200 hover:text-ink">
-            Login
-          </Link>
-          <Link
-            href="/register"
-            className="rounded-full bg-forest px-3 py-1 text-white transition-colors duration-200 hover:bg-forest-600"
-          >
-            Register
-          </Link>
-        </nav>
-        <div className="flex items-center gap-3 sm:hidden">
-          <ThemeToggle />
-          <Link href="/register" className="rounded-full bg-forest px-3 py-1 text-white">
-            Register
-          </Link>
-          <button
-            type="button"
-            aria-expanded={open}
-            onClick={() => setOpen((value) => !value)}
-            className="text-base text-ink"
-          >
-            {open ? "Close" : "Menu"}
-          </button>
         </div>
       </div>
       {open ? (
