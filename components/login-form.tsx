@@ -11,6 +11,17 @@ const demos = [
   { label: "Admin", email: "admin@hosteldesk.dev", password: "admin123" },
 ];
 
+function deskPath(value: string | null) {
+  if (!value) return "/inbox";
+  try {
+    const url = new URL(value, window.location.origin);
+    if (url.origin !== window.location.origin) return "/inbox";
+    return `${url.pathname}${url.search}`;
+  } catch {
+    return "/inbox";
+  }
+}
+
 export function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
@@ -33,7 +44,7 @@ export function LoginForm() {
       setError("Wrong email or password.");
       return;
     }
-    router.push("/inbox");
+    router.push(deskPath(params.get("callbackUrl")));
     router.refresh();
   }
 

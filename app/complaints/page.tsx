@@ -31,12 +31,12 @@ export default async function ComplaintsPage() {
       <main className="mx-auto max-w-5xl px-5 pb-16 pt-14">
         <h1 className="text-4xl font-semibold text-ink sm:text-5xl">Complaints.</h1>
         <p className="mt-4 max-w-xl text-[19px] leading-snug text-ink/60">
-          Every ticket on the desk, newest first. Room and status are public here. The description, photos, and
-          comments stay behind login.{" "}
-          <Link href="/login" className="text-forest underline">
-            Sign in
+          Every ticket on the desk, newest first. Room and status are public. The description, photos, and comments
+          stay private.{" "}
+          <Link href="/tickets/new" className="text-forest underline">
+            File a complaint
           </Link>{" "}
-          to open one.
+          when you want one on the desk.
         </p>
         <div className="mt-6">
           <PublicTicketTable tickets={tickets} />

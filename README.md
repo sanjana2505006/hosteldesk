@@ -27,7 +27,7 @@ npm run db:seed
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). The moon in the header switches the desk to a dimmer dark. The choice stays in this browser.
+Open [http://localhost:3000](http://localhost:3000). The front page shows the desk with no account. **File a complaint** is what asks you to sign in. Login and Register stay in the header. The moon there switches to a dimmer dark, and that choice stays in this browser.
 
 | Role    | Email                     | Password    |
 | ------- | ------------------------- | ----------- |
@@ -203,6 +203,7 @@ Local photo uploads land in `public/uploads`. On Vercel that disk is ephemeral â
 ## What to say in the interview
 
 - I did **not** clone a delivery app. I modeled a real campus ops queue.
+- The front page is public. Room and status are visible without an account. Filing a complaint is what sends you to sign in.
 - Double-submit and illegal status jumps are rejected on the server (`409`), not only hidden in the UI.
 - SLA is computed from `createdAt + priority`, not a stored flag that can drift. Waiting on parts does not count. That pause is the gap between timeline lines, so a ticket parked on a capacitor is not late just because the wall clock passed.
 - A warden can change that priority. The window moves with it. A finished ticket returns `409`, and a student cannot do it.

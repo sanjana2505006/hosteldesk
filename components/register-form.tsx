@@ -6,7 +6,18 @@ import { useState } from "react";
 
 type Hostel = { id: string; name: string; block: string };
 
-export function RegisterForm({ hostels }: { hostels: Hostel[] }) {
+function deskPath(value?: string) {
+  if (!value) return "/inbox";
+  try {
+    const url = new URL(value, window.location.origin);
+    if (url.origin !== window.location.origin) return "/inbox";
+    return `${url.pathname}${url.search}`;
+  } catch {
+    return "/inbox";
+  }
+}
+
+export function RegisterForm({ hostels, next }: { hostels: Hostel[]; next?: string }) {
   const router = useRouter();
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
@@ -38,7 +49,7 @@ export function RegisterForm({ hostels }: { hostels: Hostel[] }) {
       router.push("/login");
       return;
     }
-    router.push("/inbox");
+    router.push(deskPath(next));
     router.refresh();
   }
 

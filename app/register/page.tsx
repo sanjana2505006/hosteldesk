@@ -5,8 +5,10 @@ import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
-export default async function RegisterPage() {
+export default async function RegisterPage({ searchParams }: { searchParams: { callbackUrl?: string } }) {
   const hostels = await prisma.hostel.findMany({ orderBy: { block: "asc" } });
+  const next = searchParams.callbackUrl;
+  const loginHref = next ? `/login?callbackUrl=${encodeURIComponent(next)}` : "/login";
 
   return (
     <div className="min-h-screen">
@@ -16,7 +18,7 @@ export default async function RegisterPage() {
         <p className="mt-3 text-[17px] text-ink/60">Wardens and workers are created by admin seed / desk staff.</p>
         <div className="mt-8 rounded-2xl bg-paper p-6 shadow-desk">
           {hostels.length ? (
-            <RegisterForm hostels={hostels} />
+            <RegisterForm hostels={hostels} next={next} />
           ) : (
             <p className="text-sm text-ink/60">
               No hostels yet. Run <code className="font-mono">npm run db:seed</code> first.
@@ -25,7 +27,7 @@ export default async function RegisterPage() {
         </div>
         <p className="mt-4 text-sm text-ink/55">
           Already have a desk pass?{" "}
-          <Link href="/login" className="text-forest underline">
+          <Link href={loginHref} className="text-forest underline">
             Sign in
           </Link>
         </p>
