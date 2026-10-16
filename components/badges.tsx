@@ -5,18 +5,18 @@ import { cn } from "@/lib/utils";
 
 const statusClass: Record<TicketStatus, string> = {
   OPEN: "bg-ink/10 text-ink",
-  ASSIGNED: "bg-[#e8f2fc] text-forest",
-  IN_PROGRESS: "bg-[#fff4e5] text-[#c93400]",
-  WAITING_PARTS: "bg-[#fff4e5] text-[#c93400]",
-  RESOLVED: "bg-[#e8f8ee] text-[#248a3d]",
+  ASSIGNED: "bg-[#e8f2fc] text-forest dark:bg-[#2a3542] dark:text-[#a9c4e0]",
+  IN_PROGRESS: "bg-[#fff4e5] text-[#c93400] dark:bg-[#3a3428] dark:text-[#d4c09a]",
+  WAITING_PARTS: "bg-[#fff4e5] text-[#c93400] dark:bg-[#3a3428] dark:text-[#d4c09a]",
+  RESOLVED: "bg-[#e8f8ee] text-[#248a3d] dark:bg-[#2a3830] dark:text-[#a8c7b0]",
   CLOSED: "bg-ink/10 text-ink/45",
-  REJECTED: "bg-[#ffe8e6] text-rust",
+  REJECTED: "bg-[#ffe8e6] text-rust dark:bg-[#3f2e2e] dark:text-[#d7a8a3]",
 };
 
 const slaClass = {
-  breach: "bg-[#ffe8e6] text-rust",
-  risk: "bg-[#fff4e5] text-[#c93400]",
-  ok: "bg-[#e8f8ee] text-[#248a3d]",
+  breach: "bg-[#ffe8e6] text-rust dark:bg-[#3f2e2e] dark:text-[#d7a8a3]",
+  risk: "bg-[#fff4e5] text-[#c93400] dark:bg-[#3a3428] dark:text-[#d4c09a]",
+  ok: "bg-[#e8f8ee] text-[#248a3d] dark:bg-[#2a3830] dark:text-[#a8c7b0]",
   done: "bg-ink/10 text-ink/45",
 };
 
@@ -27,9 +27,9 @@ export function StatusBadge({ status }: { status: TicketStatus }) {
 export function PriorityBadge({ priority }: { priority: Priority }) {
   const tone =
     priority === "URGENT" || priority === "HIGH"
-      ? "bg-[#ffe8e6] text-rust"
+      ? "bg-[#ffe8e6] text-rust dark:bg-[#3f2e2e] dark:text-[#d7a8a3]"
       : priority === "MEDIUM"
-        ? "bg-[#fff4e5] text-[#c93400]"
+        ? "bg-[#fff4e5] text-[#c93400] dark:bg-[#3a3428] dark:text-[#d4c09a]"
         : "bg-ink/10 text-ink/70";
   return <span className={cn("stamp", tone)}>{PRIORITY_LABEL[priority]}</span>;
 }

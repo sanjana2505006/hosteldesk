@@ -31,7 +31,7 @@ export default async function BoardPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold text-ink">Warden board</h1>
-        <p className="mt-1 text-sm text-ink/55">Columns follow the status machine. Red SLA chips are already late.</p>
+        <p className="mt-1 text-sm text-ink/55">Columns follow the status machine. A red chip means it is already late.</p>
       </div>
       <div className="flex gap-3 overflow-x-auto pb-3 lg:grid lg:grid-cols-5 lg:overflow-visible">
         {COLUMNS.map((status) => {

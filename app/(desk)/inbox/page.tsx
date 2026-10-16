@@ -138,7 +138,7 @@ export default async function InboxPage({ searchParams }: { searchParams: Search
           <span>Complaint</span>
           <span>Status</span>
           <span>Priority</span>
-          <span>SLA</span>
+          <span>Due</span>
         </div>
         {filtering ? (
           <p className="border-b border-line px-4 py-2 text-xs text-ink/45">

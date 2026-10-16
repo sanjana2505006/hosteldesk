@@ -71,7 +71,7 @@ export default function HowItWorksPage() {
         <ol className="mt-3 list-decimal space-y-2 pl-5 text-base leading-7 text-ink/80">
           <li>The student files it: title, room, category, priority. The same room cannot have two open tickets in one category.</li>
           <li>The warden assigns a worker and can raise or lower the priority while it is still open.</li>
-          <li>The worker marks it in progress, waiting on parts, or resolved. Waiting on parts needs the part name, and that time does not count on the SLA clock.</li>
+          <li>The worker marks it in progress, waiting on parts, or resolved. Waiting on parts needs the part name, and that waiting time does not count as late.</li>
           <li>The student closes a resolved ticket and rates the fix from 1 to 5. An open ticket with nobody assigned can be taken back.</li>
         </ol>
 

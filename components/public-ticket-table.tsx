@@ -52,7 +52,7 @@ export function PublicTicketTable({ tickets }: { tickets: PublicTicket[] }) {
             <th className="px-5 py-3 font-normal">Complaint</th>
             <th className="px-5 py-3 font-normal">Status</th>
             <th className="px-5 py-3 font-normal">Priority</th>
-            <th className="px-5 py-3 font-normal">SLA</th>
+            <th className="px-5 py-3 font-normal">Due</th>
           </tr>
         </thead>
         <tbody>

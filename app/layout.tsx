@@ -25,7 +25,7 @@ const serif = Source_Serif_4({
 export const metadata: Metadata = {
   title: "HostelDesk — hostel complaints, assigned and timed",
   description:
-    "Campus hostel maintenance desk. Students file tickets, wardens assign workers, SLA clocks keep leaks from sitting in a WhatsApp group.",
+    "Campus hostel maintenance desk. Students file tickets, wardens assign workers, and a deadline turns late when a leak sits too long.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

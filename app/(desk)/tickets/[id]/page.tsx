@@ -129,7 +129,7 @@ export default async function TicketPage({ params }: { params: { id: string } })
             <dd>{formatDate(ticket.createdAt)}</dd>
           </div>
           <div>
-            <dt className="text-ink/40">SLA window</dt>
+            <dt className="text-ink/40">Time allowed</dt>
             <dd>
               {SLA_HOURS[ticket.priority]} hours for {ticket.priority.toLowerCase()} priority
               {ticket.status === "WAITING_PARTS" ? ". Clock is paused until the part shows up." : ""}
